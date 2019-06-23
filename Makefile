@@ -1,9 +1,10 @@
 CC = g++
 CFLAGS = -std=c++17 -g -Wall -Wextra -Wpedantic -Werror
-C = $(CC) $(CFLAGS)
+INC = -I lib -I .
+C = $(CC) $(CFLAGS) $(INC)
 
-TEST_MAIN_CPP = test/tests.cpp
-TEST_MAIN_OBJ = build/test/tests.o
+TEST_MAIN_CPP = test/tests-main.cpp
+TEST_MAIN_OBJ = build/test/tests-main.o
 
 SRC_MAIN_CPP = src/main.cpp
 
@@ -17,7 +18,9 @@ OBJ_RELEASE = $(patsubst %.cpp,%.o, $(SRC_RELEASE))
 
 all:
 	@echo Compiling all files
-	$(C) src/*.cpp -o bin/foo
+	@$(C) src/*.cpp -o bin/foo
+	@echo Running program
+	@bin/foo
 
 init:
 	@mkdir -p test
@@ -29,6 +32,7 @@ init:
 	@mkdir -p build
 	@mkdir -p build/src
 	@mkdir -p build/test
+	@mkdir -p logs
 
 clean:
 	@echo Cleaning project...
@@ -40,7 +44,13 @@ clean-all:
 	@rm -rf build/test/*.o
 	@rm -rf bin/*
 
-test-all: clearscr $(TEST_MAIN_OBJ) test-utilities
+test-all: clearscrean $(TEST_MAIN_OBJ) test-XmlElement
+
+test-XmlElement: $(TEST_MAIN_OBJ) build/src/CharacterSet.o build/src/XmlAttribute.o build/src/XmlElement.o
+	@echo Compiling XmlElement tests
+	@$(C) test/test-XmlElement.cpp $^ -o bin/test-XmlElement
+	@echo Running XmlElement tests
+	@bin/test-XmlElement
 
 build/src/%.o: src/%.cpp src/%.h
 	@echo Compiling $<
@@ -48,13 +58,13 @@ build/src/%.o: src/%.cpp src/%.h
 
 build/test/%.o: test/%.cpp
 	@echo Compiling $@
-	@$(C) $< -c -o $@
+	$(C) $< -c -o $@
 
-test-utilities:
-	@$(C) test/test-utilities.hpp -c -o build/test/test-utilities.o
+##test-utilities:
+##@$(C) test/test-utilities.hpp -c -o build/test/test-utilities.o
 
-run: clearscr all
+run: clearscrean all
 	@bin/foo
 
-clearscr:
+clearscrean:
 	@clear
