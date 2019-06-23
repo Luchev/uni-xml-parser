@@ -1,0 +1,11 @@
+#pragma once
+#include <unordered_set>
+#include <string>
+
+class CharacterSet {
+ public:
+    bool static hasWhiteSpace(const std::string & string);
+    bool static isWhiteSpace(char character);
+ private:
+    static const std::unordered_set<char> & getWhiteSpaces();
+};
