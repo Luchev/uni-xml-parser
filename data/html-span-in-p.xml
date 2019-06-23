@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 title="I'm a header">The title Attribute</h2>
+
+<p title="I'm a tooltip">
+Mouse over this <span style="color:red;">paragraph</span>, to display the title attribute as a tooltip.
+</p>
+
+</body>
+</html>
+
