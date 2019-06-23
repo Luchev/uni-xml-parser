@@ -1,13 +1,13 @@
 #include <src/XmlTag.h>
 
-#include "StringExtension.h"
+#include <src/StringExtension.h>
 #include <iostream>
 
 std::string XmlTag::toString() const {
     return contents;
 }
 
-XmlTag::XmlTag(const std::string & contents) {
+XmlTag::XmlTag(const std::string& contents) {
     this->contents = contents;
     StringExtension::trim(&this->contents);
 }

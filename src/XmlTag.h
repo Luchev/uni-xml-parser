@@ -4,7 +4,7 @@
 
 class XmlTag {
  public:
-    explicit XmlTag(const std::string & contents);
+    explicit XmlTag(const std::string& contents);
     std::string toString() const;
     bool isOpening() const;
     bool isClosing() const;
