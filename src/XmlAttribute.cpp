@@ -1,9 +1,10 @@
 #include <src/XmlAttribute.h>
+
 #include <src/CharacterSet.h>
+
 #include <string>
 
-XmlAttribute::XmlAttribute(const std::string & name,
-    const std::string & value) {
+XmlAttribute::XmlAttribute(const std::string& name, const std::string& value) {
     this->name = name;
     this->value = value;
 }
