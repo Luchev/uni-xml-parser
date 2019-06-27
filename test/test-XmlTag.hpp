@@ -106,22 +106,39 @@ bool testXmlTagIsValidFalse() {
     return tag.isValid() == false;
 }
 
-bool testIsContentsTrue() {
+bool testXmlTagIsContentsTrue() {
     XmlTag tag("<tag<");
     return tag.isContents() == true;
 }
 
-bool testIsContentsFalse() {
+bool testXmlTagIsContentsFalse() {
     XmlTag tag("<tag>");
     return tag.isContents() == false;
 }
 
-bool testIsEmptyTrue() {
+bool testXmlTagIsEmptyTrue() {
     XmlTag tag("");
     return tag.isEmpty() == true;
 }
 
-bool testIsEmptyFalse() {
+bool testXmlTagIsEmptyFalse() {
     XmlTag tag("<tag>");
     return tag.isEmpty() == false;
+}
+
+bool testXmlTagGetAttributesCountWithOneAttribute() {
+    XmlTag tag("<tag attr1=\"one\">");
+    return tag.getAttributes().size() == 1;
+}
+
+bool testXmlTagGetAttributesCountWithTwoAttributes() {
+    XmlTag tag("<tag attr1=\"one\" attr2 = \"two\">");
+    return tag.getAttributes().size() == 2;
+}
+
+bool testXmlTagGetAttributesAttributeValuesAreCorrect() {
+    XmlTag tag("<tag attr1=\"one\">");
+    assert(tag.getAttributes().size() == 1);
+    return tag.getAttributes().begin()->getName() == "attr1" &&
+        tag.getAttributes().begin()->getValue() == "one";
 }

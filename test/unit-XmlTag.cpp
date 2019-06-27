@@ -22,13 +22,13 @@ TEST_CASE("XmlTag isValid() correctness", "[xmlTag]") {
 }
 
 TEST_CASE("XmlTag isContent() correctness", "[xmlTag]") {
-    REQUIRE(testIsContentsTrue());
-    REQUIRE(testIsContentsFalse());
+    REQUIRE(testXmlTagIsContentsTrue());
+    REQUIRE(testXmlTagIsContentsFalse());
 }
 
 TEST_CASE("XmlTag isEmpty() correctness", "[xmlTag]") {
-    REQUIRE(testIsEmptyTrue());
-    REQUIRE(testIsEmptyFalse());
+    REQUIRE(testXmlTagIsEmptyTrue());
+    REQUIRE(testXmlTagIsEmptyFalse());
 }
 
 TEST_CASE("XmlTag constructor correctness", "[xmlTag]") {
@@ -57,4 +57,10 @@ TEST_CASE("XmlTag isSelfClosing() correctness", "[xmlTag]") {
     REQUIRE(testXmlTagIsSelfClosingWithSelfClosing());
     REQUIRE(testXmlTagIsSelfClosingWithOpenTag());
     REQUIRE(testXmlTagIsSelfClosingWithCloseTag());
+}
+
+TEST_CASE("XmlTag getAttributes() correctness", "[xmlTag]") {
+    REQUIRE(testXmlTagGetAttributesCountWithOneAttribute());
+    REQUIRE(testXmlTagGetAttributesCountWithTwoAttributes());
+    REQUIRE(testXmlTagGetAttributesAttributeValuesAreCorrect());
 }
