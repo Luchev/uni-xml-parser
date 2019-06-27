@@ -25,7 +25,34 @@ void XmlElementDefault::addChildElement(const XmlElement* xmlElement) {
 }
 
 std::string XmlElementDefault::toString() const {
-    return "";
+    std::string output;
+    output += toStringOpenTag();
+    for (XmlElement* child : children) {
+        output += child->toString();
+    }
+    output += toStringCloseTag();
+    return output;
+}
+
+std::string XmlElementDefault::toStringOpenTag() const {
+    std::string output;
+    output += '<';
+    output += getName();
+    for (XmlAttribute attribute : attributes) {
+        output += ' ';
+        output += attribute.toString();
+    }
+    output += '>';
+    return output;
+}
+
+std::string XmlElementDefault::toStringCloseTag() const {
+    std::string output;
+    output += '<';
+    output += '/';
+    output += getName();
+    output += ">";
+    return output;
 }
 
 void XmlElementDefault::deleteChildren() {

@@ -21,4 +21,7 @@ class XmlElementDefault : public XmlElementEmpty {
     void deleteChildren();
     void setChildren(const std::vector<XmlElement*>& children);
     void copyXmlElementDefault(const XmlElementDefault& element);
+
+    std::string toStringOpenTag() const;
+    std::string toStringCloseTag() const;
 };
