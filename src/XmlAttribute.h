@@ -1,7 +1,5 @@
 #pragma once
 
-#include <src/XmlTag.h>
-
 #include <string>
 #include <vector>
 
@@ -15,6 +13,7 @@ class XmlAttribute {
     std::string toString() const;
     std::string toStringCompact() const;
 
+    bool isNameless() const;
  private:
     std::string name;
     std::string value;

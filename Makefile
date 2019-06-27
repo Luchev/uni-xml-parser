@@ -1,10 +1,15 @@
 CC = g++
 CFLAGS = -std=c++17 -g -Wall -Wextra -Wpedantic -Werror
-INC = -I lib -I .
+INC = -I . -I lib
 C = $(CC) $(CFLAGS) $(INC)
 
+VERBOSE_OUTPUT = 0
+
+SRCB = build/src
+TESTB = build/test
+
 TEST_MAIN_CPP = test/tests-main.cpp
-TEST_MAIN_OBJ = build/test/tests-main.o
+TEST_MAIN = build/test/tests-main.o
 
 SRC_MAIN_CPP = src/main.cpp
 
@@ -15,6 +20,14 @@ OBJ_TESTS = $(patsubst %.cpp,%.o, $(SRC_TESTS))
 OBJ_RELEASE = $(patsubst %.cpp,%.o, $(SRC_RELEASE))
 
 .PHONY: all init clean run test-all clearscr
+
+build/src/%.o: src/%.cpp src/%.h
+	@echo Compiling $<
+	@$(C) -o $@ -c $<
+
+build/test/%.o: test/%.cpp
+	@echo Compiling $<
+	@$(C) -o $@ -c $<
 
 all:
 	@echo Compiling all files
@@ -36,32 +49,50 @@ init:
 
 clean:
 	@echo Cleaning project...
-	@find build/test/ -name *.o | grep -v $(TEST_MAIN_OBJ) | xargs rm
-	@rm -rf build/src/*.o
+	@rm -rf bin/* 2>/dev/null
+	@rm -rf build/src/*.o 2>/dev/null
+	@find build/test/ -name *.o 2>/dev/null | grep -v $(TEST_MAIN) | xargs rm -rf
 
 clean-all:
 	@rm -rf build/src/*.o
 	@rm -rf build/test/*.o
 	@rm -rf bin/*
 
-test-all: clearscrean $(TEST_MAIN_OBJ) test-XmlElement
+unit: $(TEST_MAIN) unit-XmlTag unit-XmlElement
 
-test-XmlElement: $(TEST_MAIN_OBJ) build/src/CharacterSet.o build/src/XmlAttribute.o build/src/XmlElement.o
-	@echo Compiling XmlElement tests
-	@$(C) test/test-XmlElement.cpp $^ -o bin/test-XmlElement
-	@echo Running XmlElement tests
-	@bin/test-XmlElement
+unit-XmlElement: $(TEST_MAIN)\
+		build/test/unit-XmlElement.o\
+		build/src/XmlElement.o\
+		build/src/XmlAttribute.o\
+		build/src/XmlTag.o\
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o
+	@echo Linking $@
+	@$(C) -o bin/$@ $^
+	@echo Running $@
+	@bin/$@
 
-build/src/%.o: src/%.cpp src/%.h
-	@echo Compiling $<
-	@$(C) $< -c -o $@
+unit-XmlTag: $(TEST_MAIN)\
+		build/test/unit-XmlTag.o\
+		build/src/XmlTag.o\
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o\
+		build/src/XmlAttribute.o\
+		build/src/XmlConfig.o
+	@echo Linking $@
+	@$(C) -o bin/$@ $^
+	@echo Running $@
+	@bin/$@
 
-build/test/%.o: test/%.cpp
-	@echo Compiling $@
-	$(C) $< -c -o $@
-
-##test-utilities:
-##@$(C) test/test-utilities.hpp -c -o build/test/test-utilities.o
+unit-XmlAttribute: $(TEST_MAIN)\
+		build/test/unit-XmlAttribute.o\
+		build/src/XmlAttribute.o\
+		build/src/CharacterSet.o\
+		build/src/XmlConfig.o
+	@echo Linking $@
+	@$(C) -o bin/$@ $^
+	@echo Running $@
+	@bin/$@
 
 run: clearscrean all
 	@bin/foo
