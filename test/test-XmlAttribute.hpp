@@ -26,6 +26,12 @@ bool testXmlAttributeToStringCompactQuotes() {
     return attribute.toString() == "attr=\"12 14\"";
 }
 
-bool testXmlAttributeIsNameless() {
-    return false;
+bool testXmlAttributeIsNamelessTrue() {
+    XmlAttribute attribute("", "val");
+    return attribute.isNameless() == true;
+}
+
+bool testXmlAttributeIsNamelessFalse() {
+    XmlAttribute attribute("name", "val");
+    return attribute.isNameless() == false;
 }

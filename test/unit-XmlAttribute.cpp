@@ -22,3 +22,8 @@ TEST_CASE("XmlAttribute toString() correctness", "[xmlAttribute]") {
 TEST_CASE("XmlAttribute toStringCompact() correctness", "[xmlAttribute]") {
     REQUIRE(testXmlAttributeToStringCompactQuotes());
 }
+
+TEST_CASE("XmlAttribute isNameless() correctness", "[xmlAttribute]") {
+    REQUIRE(testXmlAttributeIsNamelessTrue());
+    REQUIRE(testXmlAttributeIsNamelessFalse());
+}
