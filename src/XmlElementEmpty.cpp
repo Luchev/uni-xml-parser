@@ -23,3 +23,7 @@ std::string XmlElementEmpty::toString() const {
 XmlElement* XmlElementEmpty::clone() const {
     return new XmlElementEmpty(*this);
 }
+
+std::vector<XmlAttribute> XmlElementEmpty::getAttributes() const {
+    return attributes;
+}

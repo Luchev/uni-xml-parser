@@ -8,6 +8,7 @@ class XmlElementEmpty : public XmlElement {
  public:
     XmlElementEmpty();
     void addAttribute(const XmlAttribute& xmlAttribute);
+    std::vector<XmlAttribute> getAttributes() const;
 
     std::string toString() const override;
 

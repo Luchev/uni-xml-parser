@@ -77,3 +77,7 @@ copyXmlElementDefault(const XmlElementDefault& element) {
 XmlElement* XmlElementDefault::clone() const {
     return new XmlElementDefault(*this);
 }
+
+std::vector<XmlElement*> XmlElementDefault::getChildElements() const {
+    return children;
+}

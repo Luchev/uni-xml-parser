@@ -10,9 +10,9 @@ class XmlElement {
  public:
     virtual ~XmlElement() = 0;
 
+    XmlElementType getType() const;
     void setName(const std::string& name);
     std::string getName() const;
-
     void setParent(XmlElement* parent);
     XmlElement* getParent() const;
 

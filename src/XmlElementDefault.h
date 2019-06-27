@@ -11,6 +11,7 @@ class XmlElementDefault : public XmlElementEmpty {
     ~XmlElementDefault();
 
     void addChildElement(const XmlElement* xmlElement);
+    std::vector<XmlElement*> getChildElements() const;
 
     std::string toString() const override;
 
