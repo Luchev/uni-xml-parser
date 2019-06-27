@@ -8,8 +8,8 @@ VERBOSE_OUTPUT = 0
 SRCB = build/src
 TESTB = build/test
 
-TEST_MAIN_CPP = test/tests-main.cpp
-TEST_MAIN = build/test/tests-main.o
+TEST_MAIN_CPP = test/test-main.cpp
+TEST_MAIN = build/test/test-main.o
 
 SRC_MAIN_CPP = src/main.cpp
 
