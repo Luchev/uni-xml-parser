@@ -25,3 +25,11 @@ bool CharacterSet::hasWhiteSpace(const std::string& string) {
     }
     return false;
 }
+
+
+bool CharacterSet::isXmlNameCharacter(char character) {
+    return (character >= 'a' && character <= 'z') ||
+    (character >= 'A' && character <= 'Z') ||
+    character == '_' || character == '-' ||
+    (character >= '0' && character <= '9');
+}
