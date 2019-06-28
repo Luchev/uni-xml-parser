@@ -24,6 +24,14 @@ class XmlTag {
  private:
     std::string contents;
 
-    bool endsWithSlash() const;
-    bool startsWithQuestion() const;
+    bool startsWithChar(char character) const;
+    bool endsWithChar(char character) const;
+
+    size_t findNameStart() const;
+    size_t findNameEnd(size_t start) const;
+    size_t findNameEnd() const;
+
+    std::vector<XmlAttribute> getAttributesWithoutValidation() const;
+    std::string readXmlAttributeNameStartingFromIndex(size_t& index) const;
+    std::string readXmlAttributeValueStartingFromIndex(size_t& index) const;
 };

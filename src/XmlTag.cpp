@@ -18,69 +18,19 @@ std::string XmlTag::getName() const {
         return "";
     }
 
-    size_t start = 0;
-    while (this->contents[start] == '<' || this->contents[start] == '/' ||
-    this->contents[start] == '?' || isspace(this->contents[start])) {
-        start++;
-    }
+    size_t start = findNameStart();
+    size_t end = findNameEnd();
+    size_t length = end - start;
 
-    size_t end = start;
-    while (end < this->contents.length() &&
-    CharacterSet::isXmlNameCharacter(this->contents[end])) {
-        end++;
-    }
-
-    return this->contents.substr(start, end - start);
+    return this->contents.substr(start, length);
 }
 
 std::vector<XmlAttribute> XmlTag::getAttributes() const {
     if (!isValid()) {
         return std::vector<XmlAttribute>();
     }
-    size_t start = 0;
-    while (this->contents[start] == '<' || this->contents[start] == '/' ||
-    this->contents[start] == '?' || isspace(this->contents[start])) {
-        start++;
-    }
-    while (start < this->contents.length() &&
-    CharacterSet::isXmlNameCharacter(this->contents[start])) {
-        start++;
-    }
 
-    std::vector<XmlAttribute> attributes;
-    std::string name;
-    std::string value;
-    bool beforeEquals = true;
-    bool hasDoubleQuotes = false;
-    for (size_t i = start; i < this->contents.length(); i++) {
-        // std::cout << name << std::endl;
-        if (this->contents[i] == '=') {
-            beforeEquals = false;
-            continue;
-        }
-        if (beforeEquals) {
-            name.push_back(this->contents[i]);
-        } else {
-            if (this->contents[i] == '"') {
-                if (hasDoubleQuotes) {  // done reading
-                    hasDoubleQuotes = false;
-                    StringExtension::trim(&name);
-                    StringExtension::trim(&value);
-                    XmlAttribute next(name, value);
-                    attributes.push_back(next);
-                    name = "";
-                    value = "";
-                    beforeEquals = true;
-                } else {
-                    hasDoubleQuotes = true;
-                }
-            } else {
-                value.push_back(this->contents[i]);
-            }
-        }
-    }
-
-    return attributes;
+    return getAttributesWithoutValidation();
 }
 
 
@@ -89,30 +39,20 @@ bool XmlTag::isOpening() const {
 }
 
 bool XmlTag::isClosing() const {
-    for (auto it = contents.begin() + 1; it != contents.end(); it++) {
-        if (*it == '/') {
-            return true;
-        } else if (std::isspace(*it)) {
-            continue;
-        } else {
-            break;
-        }
-    }
-    return false;
+    return startsWithChar('/');
 }
 
 bool XmlTag::isSelfClosing() const {
-    return endsWithSlash();
+    return endsWithChar('/');
 }
 
 bool XmlTag::isSpecial() const {
-    return startsWithQuestion();
+    return startsWithChar('?');
 }
 
 bool XmlTag::isValid() const {
     if (this->contents.length() > 0) {
-        return *this->contents.begin() == '<' &&
-            *this->contents.rbegin() == '>';
+        return *this->contents.begin() == '<' && *this->contents.rbegin() == '>';
     }
     return false;
 }
@@ -125,9 +65,9 @@ bool XmlTag::isEmpty() const {
     return this->contents.size() == 0;
 }
 
-bool XmlTag::endsWithSlash() const {
-    for (auto it = contents.rbegin() + 1; it != contents.rend(); it++) {
-        if (*it == '/') {
+bool XmlTag::startsWithChar(char character) const {
+    for (auto it = contents.begin() + 1; it != contents.end(); it++) {
+        if (*it == character) {
             return true;
         } else if (std::isspace(*it)) {
             continue;
@@ -138,9 +78,9 @@ bool XmlTag::endsWithSlash() const {
     return false;
 }
 
-bool XmlTag::startsWithQuestion() const {
-    for (auto it = contents.begin() + 1; it != contents.end(); it++) {
-        if (*it == '?') {
+bool XmlTag::endsWithChar(char character) const {
+    for (auto it = contents.rbegin() + 1; it != contents.rend(); it++) {
+        if (*it == character) {
             return true;
         } else if (std::isspace(*it)) {
             continue;
@@ -149,4 +89,77 @@ bool XmlTag::startsWithQuestion() const {
         }
     }
     return false;
+}
+
+size_t XmlTag::findNameStart() const {
+    size_t start = 0;
+    while (start < this->contents.length() &&
+    !CharacterSet::isXmlNameCharacter(this->contents[start])) {
+        start++;
+    }
+    return start;
+}
+
+size_t XmlTag::findNameEnd(size_t start) const {
+    size_t end = start;
+    while (end < this->contents.length() && CharacterSet::isXmlNameCharacter(this->contents[end])) {
+        end++;
+    }
+    return end;
+}
+
+size_t XmlTag::findNameEnd() const {
+    size_t start = findNameStart();
+    size_t end = findNameEnd(start);
+    return end;
+}
+
+std::vector<XmlAttribute> XmlTag::getAttributesWithoutValidation() const {
+    std::vector<XmlAttribute> attributes;
+
+    size_t i = findNameEnd();
+    while (i < this->contents.length()) {
+        std::string name = readXmlAttributeNameStartingFromIndex(i);
+        std::string value = readXmlAttributeValueStartingFromIndex(i);
+        if (name.length() != 0 && value.length() != 0) {
+            attributes.push_back({name, value});
+        } else {
+            break;
+        }
+    }
+
+    return attributes;
+}
+
+std::string XmlTag::readXmlAttributeNameStartingFromIndex(size_t& index) const {
+    std::string name;
+
+    while (index < this->contents.length()) {
+        if (this->contents[index] != '=') {
+            name.push_back(this->contents[index]);
+        } else {
+            index++;
+            break;
+        }
+        index++;
+    }
+    return name;
+}
+
+std::string XmlTag::readXmlAttributeValueStartingFromIndex(size_t& index) const {
+    std::string value;
+    bool encounteredDoubleQuotes = false;
+
+    while (index < this->contents.length()) {
+        if (this->contents[index] != '"') {
+            value.push_back(this->contents[index]);
+        } else if (!encounteredDoubleQuotes) {
+            encounteredDoubleQuotes = true;
+        } else {
+            index++;
+            break;
+        }
+        index++;
+    }
+    return value;
 }

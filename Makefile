@@ -62,9 +62,9 @@ unit: $(TEST_MAIN_OBJ)\
 unit-XmlTag: $(TEST_MAIN_OBJ)\
 		build/test/unit-XmlTag.o\
 		build/src/XmlTag.o\
+		build/src/XmlAttribute.o\
 		build/src/CharacterSet.o\
 		build/src/StringExtension.o\
-		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
@@ -75,6 +75,7 @@ unit-XmlAttribute: $(TEST_MAIN_OBJ)\
 		build/test/unit-XmlAttribute.o\
 		build/src/XmlAttribute.o\
 		build/src/CharacterSet.o\
+		build/src/StringExtension.o\
 		build/src/XmlConfig.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
@@ -87,7 +88,8 @@ unit-XmlElementEmpty: $(TEST_MAIN_OBJ)\
 		build/src/XmlElementEmpty.o\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
-		build/src/CharacterSet.o
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -100,7 +102,8 @@ unit-XmlElementSpecial: $(TEST_MAIN_OBJ)\
 		build/src/XmlElementSpecial.o\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
-		build/src/CharacterSet.o
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -112,7 +115,8 @@ unit-XmlElementContent: $(TEST_MAIN_OBJ)\
 		build/src/XmlElementContent.o\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
-		build/src/CharacterSet.o
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -126,7 +130,8 @@ unit-XmlElementDefault: $(TEST_MAIN_OBJ)\
 		build/src/XmlElementDefault.o\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
-		build/src/CharacterSet.o
+		build/src/CharacterSet.o\
+		build/src/StringExtension.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@

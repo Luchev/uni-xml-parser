@@ -1,13 +1,16 @@
 #include <src/XmlAttribute.h>
 #include <src/CharacterSet.h>
+#include <src/StringExtension.h>
 #include <src/XmlConfig.h>
 #include <string>
 #include <stdexcept>
 
 XmlAttribute::XmlAttribute(const std::string& name, const std::string& value) {
-    validateAttributeParameters(name, value);
     this->name = name;
     this->value = value;
+    StringExtension::trim(&this->name);
+    StringExtension::trim(&this->value);
+    validateAttributeParameters(name, value);
 }
 
 std::string XmlAttribute::getName() const {
