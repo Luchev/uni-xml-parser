@@ -1,7 +1,8 @@
 #include <src/XmlElementSpecial.h>
 
-XmlElementSpecial::XmlElementSpecial() {
+XmlElementSpecial::XmlElementSpecial(const std::string& name) {
     type = XmlElementType::Special;
+    this->name = name;
 }
 
 std::string XmlElementSpecial::toString() const {

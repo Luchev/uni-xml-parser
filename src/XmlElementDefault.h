@@ -5,7 +5,7 @@
 
 class XmlElementDefault : public XmlElementEmpty {
  public:
-    XmlElementDefault();
+    explicit XmlElementDefault(const std::string& name = "");
     XmlElementDefault(const XmlElementDefault& rhs);
     XmlElementDefault& operator=(const XmlElementDefault& rhs);
     ~XmlElementDefault();
@@ -14,6 +14,7 @@ class XmlElementDefault : public XmlElementEmpty {
     std::vector<XmlElement*> getChildElements() const;
 
     std::string toString() const override;
+    std::string toStringBeautified() const override;
 
     XmlElement* clone() const override;
  private:

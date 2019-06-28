@@ -21,3 +21,7 @@ void XmlElement::setParent(XmlElement* parent) {
 XmlElement* XmlElement::getParent() const {
     return parent;
 }
+
+XmlElementType XmlElement::getType() const {
+    return this->type;
+}

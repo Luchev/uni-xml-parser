@@ -4,7 +4,7 @@
 
 class XmlElementSpecial : public XmlElementEmpty {
  public:
-    XmlElementSpecial();
+    explicit XmlElementSpecial(const std::string& name = "");
 
     std::string toString() const override;
 

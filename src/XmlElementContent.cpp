@@ -13,3 +13,11 @@ std::string XmlElementContent::toString() const {
 XmlElement* XmlElementContent::clone() const {
     return new XmlElementContent(*this);
 }
+
+void XmlElementContent::setContent(const std::string& content) {
+    this->content = content;
+}
+
+std::string XmlElementContent::toStringBeautified() const {
+    return toString() + "\n";
+}

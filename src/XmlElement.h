@@ -17,6 +17,7 @@ class XmlElement {
     XmlElement* getParent() const;
 
     virtual std::string toString() const = 0;
+    virtual std::string toStringBeautified() const = 0;
 
     virtual XmlElement* clone() const = 0;
  protected:
