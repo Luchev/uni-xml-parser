@@ -30,9 +30,9 @@ build/test/%.o: test/%.cpp
 	@$(C) -o $@ -c $<
 
 all:
-	@echo Compiling all files
+#@echo Compiling all files
 	@$(C) src/*.cpp -o bin/foo
-	@echo Running program
+#@echo Running program
 	@bin/foo
 
 init:
@@ -41,6 +41,7 @@ init:
 	@mkdir -p doc
 	@mkdir -p lib
 	@mkdir -p data
+	@mkdir -p include
 	@mkdir -p bin
 	@mkdir -p build
 	@mkdir -p build/src
