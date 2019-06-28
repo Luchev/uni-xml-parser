@@ -10,6 +10,7 @@ class XmlConfig {
     XmlConfig();
     XmlConfig(const XmlConfig &) = delete;
     XmlConfig& operator=(const XmlConfig &) = delete;
+    ~XmlConfig();
 
     static XmlConfig * instance;
 

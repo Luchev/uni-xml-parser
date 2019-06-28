@@ -16,3 +16,7 @@ XmlConfig * XmlConfig::getInstance() {
 std::string XmlConfig::getOutputQuote() const {
     return outputQuote;
 }
+
+XmlConfig::~XmlConfig() {
+    delete instance;
+}
