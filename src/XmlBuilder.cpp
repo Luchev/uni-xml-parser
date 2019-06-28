@@ -11,17 +11,18 @@
 #include <sstream>
 
 XmlBuilder::XmlBuilder() {
-    inputStream = nullptr;
+    // Intentionally empty
 }
 
 XmlBuilder::~XmlBuilder() {
-    deleteInputStream();
+    // Intentionally empty
 }
 
 XmlElementDefault* XmlBuilder::parseFile(const std::string& path) {
-    deleteInputStream();
     openFileStream(path);
-    return parse();
+    XmlElementDefault* root = parse();
+    deleteInputStream();
+    return root;
 }
 
 void XmlBuilder::openStringStream(const std::string& string) {
@@ -29,9 +30,10 @@ void XmlBuilder::openStringStream(const std::string& string) {
 }
 
 XmlElementDefault* XmlBuilder::parseString(const std::string& xml) {
-    deleteInputStream();
     openStringStream(xml);
-    return parse();
+    XmlElementDefault* root = parse();
+    deleteInputStream();
+    return root;
 }
 
 XmlElementDefault* XmlBuilder::parse() {

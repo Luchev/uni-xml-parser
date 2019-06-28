@@ -18,7 +18,7 @@ class XmlBuilder {
     XmlElementDefault* parseString(const std::string & xml);
 
  private:
-    std::istream* inputStream;
+    std::istream* inputStream = nullptr;
 
     void deleteInputStream();
     void createCleanInputStream();
