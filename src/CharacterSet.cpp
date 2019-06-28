@@ -1,16 +1,15 @@
 #include <src/CharacterSet.h>
 
 const std::unordered_set<char>& CharacterSet::getWhiteSpaces() {
-    static std::unordered_set<char>* whitespaces = nullptr;
+    static std::unordered_set<char> whitespaces;
     static std::string whitespacesString = " \t\n";
 
-    if (whitespaces == nullptr) {
-        whitespaces = new std::unordered_set<char>();
+    if (whitespaces.empty()) {
         for (char& character : whitespacesString) {
-            whitespaces->insert(character);
+            whitespaces.insert(character);
         }
     }
-    return *whitespaces;
+    return whitespaces;
 }
 
 bool CharacterSet::isWhiteSpace(char character) {
