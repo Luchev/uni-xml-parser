@@ -13,6 +13,7 @@ class XmlTag {
     bool isOpening() const;
     bool isClosing() const;
     bool isSelfClosing() const;
+    bool isSpecial() const;
     bool isValid() const;
     bool isContents() const;
     bool isEmpty() const;

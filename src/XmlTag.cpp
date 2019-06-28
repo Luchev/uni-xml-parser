@@ -59,7 +59,11 @@ bool XmlTag::startsWithQuestion() const {
 }
 
 bool XmlTag::isSelfClosing() const {
-    return endsWithSlash() || startsWithQuestion();
+    return endsWithSlash();
+}
+
+bool XmlTag::isSpecial() const {
+    return startsWithQuestion();
 }
 
 bool XmlTag::isValid() const {
