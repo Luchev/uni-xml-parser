@@ -2,10 +2,6 @@
 
 XmlConfig * XmlConfig::instance = nullptr;
 
-XmlConfig::XmlConfig() {
-    // Intentionally empty
-}
-
 XmlConfig * XmlConfig::getInstance() {
     if (XmlConfig::instance == nullptr) {
         XmlConfig::instance = new XmlConfig();
@@ -19,4 +15,8 @@ std::string XmlConfig::getOutputQuote() const {
 
 XmlConfig::~XmlConfig() {
     delete instance;
+}
+
+XmlConfig::XmlConfig() {
+    // Intentionally empty - has nothing to initialize
 }

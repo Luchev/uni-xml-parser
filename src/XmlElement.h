@@ -1,5 +1,4 @@
 #pragma once
-
 #include <src/XmlAttribute.h>
 #include <src/XmlTag.h>
 #include <src/XmlElementType.h>
@@ -11,15 +10,16 @@ class XmlElement {
     virtual ~XmlElement() = 0;
 
     XmlElementType getType() const;
-    void setName(const std::string& name);
     std::string getName() const;
-    void setParent(XmlElement* parent);
+    void setName(const std::string& name);
     XmlElement* getParent() const;
+    void setParent(XmlElement* parent);
 
     virtual std::string toString() const = 0;
     virtual std::string toStringBeautified() const = 0;
 
     virtual XmlElement* clone() const = 0;
+
  protected:
     XmlElementType type;
     std::string name;

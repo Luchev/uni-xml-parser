@@ -1,15 +1,8 @@
 #pragma once
-
 #include <src/XmlElementDefault.h>
 #include <src/XmlElementEmpty.h>
 #include <src/XmlElementContent.h>
 #include <string>
-
-bool testXmlElementDefaultToStringEmptyTag() {
-    XmlElementDefault element;
-    element.setName("tag");
-    return element.toString() == "<tag></tag>";
-}
 
 bool testXmlElementDefaultAddChildCountOneChild() {
     XmlElementDefault element;
@@ -17,7 +10,23 @@ bool testXmlElementDefaultAddChildCountOneChild() {
     XmlElementEmpty empty;
     empty.setName("empty");
     element.addChildElement(&empty);
-    return element.getChildElements().size() == 1;
+    return element.getNumberOfChildren() == 1;
+}
+
+bool testXmlElementDefaultAddChildCountTwoChildren() {
+    XmlElementDefault element;
+    element.setName("tag");
+    XmlElementEmpty empty;
+    empty.setName("empty");
+    element.addChildElement(&empty);
+    element.addChildElement(&empty);
+    return element.getNumberOfChildren() == 2;
+}
+
+bool testXmlElementDefaultToStringEmptyTag() {
+    XmlElementDefault element;
+    element.setName("tag");
+    return element.toString() == "<tag></tag>";
 }
 
 bool testXmlElementDefaultToStringWithOneChild() {

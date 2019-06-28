@@ -13,10 +13,10 @@ bool testXmlElementEmptyParent() {
     return element.getParent() == &element;
 }
 
-bool testXmlElementEmptyToStringNoAttributes() {
+bool testXmlElementEmptyAddAttributeCountZero() {
     XmlElementEmpty element;
-    element.setName("name1");
-    return element.toString() == "<name1/>";
+    element.setName("tag");
+    return element.getAttributes().size() == 0;
 }
 
 bool testXmlElementEmptyAddAttributeCountOne() {
@@ -26,12 +26,6 @@ bool testXmlElementEmptyAddAttributeCountOne() {
     return element.getAttributes().size() == 1;
 }
 
-bool testXmlElementEmptyAddAttributeCountZero() {
-    XmlElementEmpty element;
-    element.setName("tag");
-    return element.getAttributes().size() == 0;
-}
-
 bool testXmlElementEmptyAddAttributeValueIsCorrect() {
     XmlElementEmpty element;
     element.setName("tag");
@@ -39,6 +33,12 @@ bool testXmlElementEmptyAddAttributeValueIsCorrect() {
     assert(element.getAttributes().size() == 1);
     return element.getAttributes().begin()->getName() == "name" &&
         element.getAttributes().begin()->getValue() == "value";
+}
+
+bool testXmlElementEmptyToStringNoAttributes() {
+    XmlElementEmpty element;
+    element.setName("name1");
+    return element.toString() == "<name1/>";
 }
 
 bool testXmlElementEmptyToStringOneAttribute() {

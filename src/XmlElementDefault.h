@@ -11,18 +11,21 @@ class XmlElementDefault : public XmlElementEmpty {
     ~XmlElementDefault();
 
     void addChildElement(const XmlElement* xmlElement);
-    std::vector<XmlElement*> getChildElements() const;
+    XmlElement* getLastChild();
+    size_t getNumberOfChildren() const;
 
     std::string toString() const override;
     std::string toStringBeautified() const override;
 
     XmlElement* clone() const override;
+
  private:
     std::vector<XmlElement*> children;
 
-    void deleteChildren();
-    void setChildren(const std::vector<XmlElement*>& children);
     void copyXmlElementDefault(const XmlElementDefault& element);
+    void setChildren(const std::vector<XmlElement*>& children);
+    void deleteChildren();
+    XmlElement* getChild(size_t index);
 
     std::string toStringOpenTag() const;
     std::string toStringCloseTag() const;

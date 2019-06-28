@@ -1,9 +1,7 @@
 #include <src/XmlBuilder.h>
-
 #include <src/StringExtension.h>
 #include <include/XmlElements.h>
 #include <src/XmlFactory.h>
-
 #include <string>
 #include <vector>
 #include <iostream>
@@ -20,69 +18,22 @@ XmlBuilder::~XmlBuilder() {
 
 XmlElementDefault* XmlBuilder::parseFile(const std::string& path) {
     openFileStream(path);
-    XmlElementDefault* root = parse();
+    XmlElementDefault* root = parseInputStream();
     deleteInputStream();
     return root;
-}
-
-void XmlBuilder::openStringStream(const std::string& string) {
-    inputStream = new std::stringstream(string);
 }
 
 XmlElementDefault* XmlBuilder::parseString(const std::string& xml) {
     openStringStream(xml);
-    XmlElementDefault* root = parse();
+    XmlElementDefault* root = parseInputStream();
     deleteInputStream();
     return root;
 }
 
-XmlElementDefault* XmlBuilder::parse() {
-    if (inputStream->fail()) {
-        return nullptr;
-    } else {
-        return parseInputStreamToXml();
-    }
-}
-
-void XmlBuilder::deleteInputStream() {
-    delete inputStream;
-}
-
-void XmlBuilder::openFileStream(const std::string& path) {
-    inputStream = new std::ifstream(path);
-    if (inputStream->fail()) {
-        std::cout << "Failed to open input stream\n";
-    }
-}
-
-XmlElementDefault* XmlBuilder::parseInputStreamToXml() const {
+XmlElementDefault* XmlBuilder::parseInputStream() const {
     std::vector<XmlTag> tags = parseStreamToTags();
     XmlElementDefault* root = parseXmlTagsToXmlElements(tags);
     return root;
-}
-
-std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
-    std::string buffer;
-    char character;
-    std::vector<XmlTag> tags;
-    while (this->inputStream->get(character)) {
-        if (character == '<') {
-            StringExtension::trim(&buffer);
-            XmlTag contents(buffer);
-            if (!contents.isEmpty()) {
-                tags.push_back(contents);
-            }
-            buffer.clear();
-        } else if (character == '>') {
-            buffer.push_back(character);
-            XmlTag tag(buffer);
-            tags.push_back(tag);
-            buffer.clear();
-            continue;
-        }
-        buffer.push_back(character);
-    }
-    return tags;
 }
 
 XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const {
@@ -103,8 +54,7 @@ XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTa
                     next.setAttributes(tag.getAttributes());
                     next.setParent(currentNode);
                     currentNode->addChildElement(&next);
-                    XmlElement* lastElement =
-                        currentNode->getChildElements()[currentNode->getChildElements().size() - 1];
+                    XmlElement* lastElement = currentNode->getLastChild();
                     currentNode = dynamic_cast<XmlElementDefault*>(lastElement);
                 } else {
                     if (currentNode->getParent() == nullptr) {
@@ -119,4 +69,46 @@ XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTa
         }
     }
     return currentNode;
+}
+
+std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
+    std::string bufferString;
+    char bufferChar;
+    std::vector<XmlTag> tags;
+    while (this->inputStream->get(bufferChar)) {
+        if (bufferChar == '<') {
+            StringExtension::trim(&bufferString);
+            XmlTag contents(bufferString);
+            if (!contents.isEmpty()) {
+                tags.push_back(contents);
+            }
+            bufferString.clear();
+        } else if (bufferChar == '>') {
+            bufferString.push_back(bufferChar);
+            XmlTag tag(bufferString);
+            tags.push_back(tag);
+            bufferString.clear();
+            continue;
+        }
+        bufferString.push_back(bufferChar);
+    }
+    return tags;
+}
+
+void XmlBuilder::openFileStream(const std::string& path) {
+    inputStream = new std::ifstream(path);
+    if (inputStream->fail()) {
+        throw std::invalid_argument("Failed to open file " + path);
+    }
+}
+
+void XmlBuilder::openStringStream(const std::string& string) {
+    inputStream = new std::stringstream(string);
+    if (inputStream->fail()) {
+        throw std::invalid_argument("Failed to make stream from string");
+    }
+}
+
+void XmlBuilder::deleteInputStream() {
+    delete inputStream;
 }

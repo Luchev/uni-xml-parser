@@ -1,8 +1,3 @@
-#include <src/XmlElementEmpty.h>
-
-#include <iostream>
-#include <cstring>
-
 #include <lib/catch.hpp>
 #include <test/test-utilities.hpp>
 #include <test/test-XmlElementEmpty.hpp>

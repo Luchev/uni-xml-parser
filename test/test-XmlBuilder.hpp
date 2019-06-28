@@ -1,9 +1,7 @@
 #pragma once
-
 #include <src/XmlBuilder.h>
 #include <src/XmlElementDefault.h>
 #include <string>
-#include <algorithm>
 
 bool testXmlBuilderParseStringEmpty() {
     XmlBuilder builder;

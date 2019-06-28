@@ -27,6 +27,17 @@ void XmlElementDefault::addChildElement(const XmlElement* xmlElement) {
     this->children.push_back(xmlElement->clone());
 }
 
+XmlElement* XmlElementDefault::getLastChild() {
+    if (this->children.size() == 0) {
+        throw std::out_of_range("Cannot get last child xml element. There are no child elements.");
+    }
+    return getChild(this->children.size() - 1);
+}
+
+size_t XmlElementDefault::getNumberOfChildren() const {
+    return this->children.size();
+}
+
 std::string XmlElementDefault::toString() const {
     std::string output;
     output += toStringOpenTag();
@@ -51,6 +62,37 @@ std::string XmlElementDefault::toStringBeautified() const {
         output += '\n';
     }
     return output;
+}
+
+XmlElement* XmlElementDefault::clone() const {
+    return new XmlElementDefault(*this);
+}
+
+void XmlElementDefault::copyXmlElementDefault(const XmlElementDefault& element) {
+    XmlElementEmpty::operator=(element);
+    setChildren(element.children);
+}
+
+void XmlElementDefault::setChildren(const std::vector<XmlElement*>& children) {
+    for (XmlElement* child : children) {
+        this->children.push_back(child->clone());
+    }
+}
+
+void XmlElementDefault::deleteChildren() {
+    for (XmlElement* child : children) {
+        delete child;
+    }
+    children.resize(0);
+}
+
+XmlElement* XmlElementDefault::getChild(size_t index) {
+    if (index >= children.size()) {
+        throw std::out_of_range("Cannot get " + std::to_string(index) +
+            " child xml element. There are only " + std::to_string(this->children.size()) +
+            " child elements");
+    }
+    return children[index];
 }
 
 std::string XmlElementDefault::toStringOpenTag() const {
@@ -78,31 +120,4 @@ std::string XmlElementDefault::toStringCloseTag() const {
     output += getName();
     output += ">";
     return output;
-}
-
-void XmlElementDefault::deleteChildren() {
-    for (XmlElement* child : children) {
-        delete child;
-    }
-    children.resize(0);
-}
-
-void XmlElementDefault::setChildren(const std::vector<XmlElement*>& children) {
-    for (XmlElement* child : children) {
-        this->children.push_back(child->clone());
-    }
-}
-
-void XmlElementDefault::
-copyXmlElementDefault(const XmlElementDefault& element) {
-    XmlElementEmpty::operator=(element);
-    setChildren(element.children);
-}
-
-XmlElement* XmlElementDefault::clone() const {
-    return new XmlElementDefault(*this);
-}
-
-std::vector<XmlElement*> XmlElementDefault::getChildElements() const {
-    return children;
 }
