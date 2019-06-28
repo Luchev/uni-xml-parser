@@ -1,8 +1,3 @@
-#include <src/XmlBuilder.h>
-
-#include <iostream>
-#include <cstring>
-
 #include <lib/catch.hpp>
 #include <test/test-utilities.hpp>
 #include <test/test-XmlBuilder.hpp>

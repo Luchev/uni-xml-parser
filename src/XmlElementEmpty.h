@@ -7,6 +7,7 @@
 class XmlElementEmpty : public XmlElement {
  public:
     explicit XmlElementEmpty(const std::string& name = "");
+
     void addAttribute(const XmlAttribute& xmlAttribute);
     std::vector<XmlAttribute> getAttributes() const;
     void setAttributes(const std::vector<XmlAttribute>& attributes);
@@ -15,6 +16,7 @@ class XmlElementEmpty : public XmlElement {
     std::string toStringBeautified() const override;
 
     XmlElement* clone() const override;
+
  protected:
     std::vector<XmlAttribute> attributes;
 };

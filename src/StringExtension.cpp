@@ -1,7 +1,11 @@
 #include <src/StringExtension.h>
-
 #include <string>
 #include <algorithm>
+
+void StringExtension::trim(std::string* string) {
+    trimLeft(string);
+    trimRight(string);
+}
 
 void StringExtension::trimLeft(std::string* string) {
     string->erase(
@@ -16,9 +20,4 @@ void StringExtension::trimRight(std::string* string) {
         std::find_if(string->rbegin(), string->rend(), [](int character) {
             return !std::isspace(character);
     }).base(), string->end());
-}
-
-void StringExtension::trim(std::string* string) {
-    trimLeft(string);
-    trimRight(string);
 }

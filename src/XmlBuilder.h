@@ -1,8 +1,6 @@
 #pragma once
-
 #include <src/XmlTag.h>
 #include <src/XmlElementDefault.h>
-
 #include <string>
 #include <vector>
 #include <iostream>
@@ -20,13 +18,11 @@ class XmlBuilder {
  private:
     std::istream* inputStream = nullptr;
 
-    void deleteInputStream();
-    void createCleanInputStream();
+    XmlElementDefault* parseInputStream() const;
+    XmlElementDefault* parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const;
+    std::vector<XmlTag> parseStreamToTags() const;
+
     void openFileStream(const std::string & path);
     void openStringStream(const std::string & string);
-
-    XmlElementDefault* parse();
-    XmlElementDefault* parseInputStreamToXml() const;
-    std::vector<XmlTag> parseStreamToTags() const;
-    XmlElementDefault* parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const;
+    void deleteInputStream();
 };

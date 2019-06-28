@@ -1,27 +1,26 @@
 #include <src/XmlElement.h>
-
 #include <src/XmlAttribute.h>
 
 XmlElement::~XmlElement() {
-    // Intentionally empy
+    // Intentionally empy - has nothing to delete
 }
 
-void XmlElement::setName(const std::string& name) {
-    this->name = name;
+XmlElementType XmlElement::getType() const {
+    return this->type;
 }
 
 std::string XmlElement::getName() const {
     return name;
 }
 
-void XmlElement::setParent(XmlElement* parent) {
-    this->parent = parent;
+void XmlElement::setName(const std::string& name) {
+    this->name = name;
 }
 
 XmlElement* XmlElement::getParent() const {
     return parent;
 }
 
-XmlElementType XmlElement::getType() const {
-    return this->type;
+void XmlElement::setParent(XmlElement* parent) {
+    this->parent = parent;
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <src/XmlAttribute.h>
 #include <src/XmlConfig.h>
 #include <string>

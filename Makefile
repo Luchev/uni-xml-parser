@@ -13,18 +13,8 @@ TEST_MAIN_OBJ = build/test/test-main.o
 
 .PHONY: all init clean run test-all clearscr
 
-build/src/%.o: src/%.cpp src/%.h
-	@echo Compiling $<
-	@$(C) -o $@ -c $<
-
-build/test/%.o: test/%.cpp
-	@echo Compiling $<
-	@$(C) -o $@ -c $<
-
 all:
-#@echo Compiling all files
 	@$(C) src/*.cpp -o bin/foo
-#@echo Running program
 	@bin/foo
 
 init:
@@ -50,7 +40,15 @@ clean:
 clean-all:
 	@rm -rf build/src/*.o
 	@rm -rf build/test/*.o
-	@rm -rf bin/*
+	@find bin/ -type f 2>/dev/null -exec rm -rf '{}' \;
+
+build/src/%.o: src/%.cpp src/%.h
+	@echo Compiling $<
+	@$(C) -o $@ -c $<
+
+build/test/%.o: test/%.cpp
+	@echo Compiling $<
+	@$(C) -o $@ -c $<
 
 unit: $(TEST_MAIN_OBJ)\
 		unit-XmlTag\

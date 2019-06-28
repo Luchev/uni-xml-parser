@@ -9,6 +9,14 @@ void XmlElementEmpty::addAttribute(const XmlAttribute& attribute) {
     attributes.push_back(attribute);
 }
 
+std::vector<XmlAttribute> XmlElementEmpty::getAttributes() const {
+    return attributes;
+}
+
+void XmlElementEmpty::setAttributes(const std::vector<XmlAttribute>& attributes) {
+    this->attributes = attributes;
+}
+
 std::string XmlElementEmpty::toString() const {
     std::string output;
     output += '<';
@@ -27,12 +35,4 @@ std::string XmlElementEmpty::toStringBeautified() const {
 
 XmlElement* XmlElementEmpty::clone() const {
     return new XmlElementEmpty(*this);
-}
-
-std::vector<XmlAttribute> XmlElementEmpty::getAttributes() const {
-    return attributes;
-}
-
-void XmlElementEmpty::setAttributes(const std::vector<XmlAttribute>& attributes) {
-    this->attributes = attributes;
 }
