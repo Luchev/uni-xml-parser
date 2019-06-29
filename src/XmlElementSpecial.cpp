@@ -5,6 +5,13 @@ XmlElementSpecial::XmlElementSpecial(const std::string& name) {
     this->name = name;
 }
 
+XmlElementSpecial::
+XmlElementSpecial(const std::string& name, const std::vector<XmlAttribute> attributes) {
+    type = XmlElementType::Special;
+    this->name = name;
+    this->attributes = attributes;
+}
+
 std::string XmlElementSpecial::toString() const {
     std::string output;
     output += '<';

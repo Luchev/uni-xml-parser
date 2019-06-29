@@ -5,6 +5,13 @@ XmlElementEmpty::XmlElementEmpty(const std::string& name) {
     this->name = name;
 }
 
+XmlElementEmpty::
+XmlElementEmpty(const std::string& name, const std::vector<XmlAttribute> attributes) {
+    type = XmlElementType::Empty;
+    this->name = name;
+    this->attributes = attributes;
+}
+
 void XmlElementEmpty::addAttribute(const XmlAttribute& attribute) {
     attributes.push_back(attribute);
 }

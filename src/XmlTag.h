@@ -32,6 +32,6 @@ class XmlTag {
     size_t findNameEnd() const;
 
     std::vector<XmlAttribute> getAttributesWithoutValidation() const;
-    std::string readXmlAttributeNameStartingFromIndex(size_t& index) const;
-    std::string readXmlAttributeValueStartingFromIndex(size_t& index) const;
+    std::string readXmlAttributeNameStartingFromIndex(size_t* index) const;
+    std::string readXmlAttributeValueStartingFromIndex(size_t* index) const;
 };

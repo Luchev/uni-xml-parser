@@ -7,6 +7,7 @@
 class XmlElementEmpty : public XmlElement {
  public:
     explicit XmlElementEmpty(const std::string& name = "");
+    XmlElementEmpty(const std::string& name, const std::vector<XmlAttribute> attributes);
 
     void addAttribute(const XmlAttribute& xmlAttribute);
     std::vector<XmlAttribute> getAttributes() const;

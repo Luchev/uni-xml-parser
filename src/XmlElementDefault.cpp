@@ -7,6 +7,13 @@ XmlElementDefault::XmlElementDefault(const std::string& name) {
     this->name = name;
 }
 
+XmlElementDefault::
+XmlElementDefault(const std::string& name, const std::vector<XmlAttribute>& attributes) {
+    type = XmlElementType::Default;
+    this->name = name;
+    this->attributes = attributes;
+}
+
 XmlElementDefault::XmlElementDefault(const XmlElementDefault& rhs) : XmlElementEmpty(rhs) {
     copyXmlElementDefault(rhs);
 }

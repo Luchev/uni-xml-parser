@@ -6,6 +6,7 @@
 class XmlElementDefault : public XmlElementEmpty {
  public:
     explicit XmlElementDefault(const std::string& name = "");
+    XmlElementDefault(const std::string& name, const std::vector<XmlAttribute>& attributes);
     XmlElementDefault(const XmlElementDefault& rhs);
     XmlElementDefault& operator=(const XmlElementDefault& rhs);
     ~XmlElementDefault();

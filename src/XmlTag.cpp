@@ -119,8 +119,8 @@ std::vector<XmlAttribute> XmlTag::getAttributesWithoutValidation() const {
 
     size_t i = findNameEnd();
     while (i < this->contents.length()) {
-        std::string name = readXmlAttributeNameStartingFromIndex(i);
-        std::string value = readXmlAttributeValueStartingFromIndex(i);
+        std::string name = readXmlAttributeNameStartingFromIndex(&i);
+        std::string value = readXmlAttributeValueStartingFromIndex(&i);
         if (name.length() != 0 && value.length() != 0) {
             attributes.push_back({name, value});
         } else {
@@ -131,35 +131,35 @@ std::vector<XmlAttribute> XmlTag::getAttributesWithoutValidation() const {
     return attributes;
 }
 
-std::string XmlTag::readXmlAttributeNameStartingFromIndex(size_t& index) const {
+std::string XmlTag::readXmlAttributeNameStartingFromIndex(size_t* index) const {
     std::string name;
 
-    while (index < this->contents.length()) {
-        if (this->contents[index] != '=') {
-            name.push_back(this->contents[index]);
+    while (*index < this->contents.length()) {
+        if (this->contents[*index] != '=') {
+            name.push_back(this->contents[*index]);
         } else {
-            index++;
+            (*index)++;
             break;
         }
-        index++;
+        (*index)++;
     }
     return name;
 }
 
-std::string XmlTag::readXmlAttributeValueStartingFromIndex(size_t& index) const {
+std::string XmlTag::readXmlAttributeValueStartingFromIndex(size_t* index) const {
     std::string value;
     bool encounteredDoubleQuotes = false;
 
-    while (index < this->contents.length()) {
-        if (this->contents[index] != '"') {
-            value.push_back(this->contents[index]);
+    while (*index < this->contents.length()) {
+        if (this->contents[*index] != '"') {
+            value.push_back(this->contents[*index]);
         } else if (!encounteredDoubleQuotes) {
             encounteredDoubleQuotes = true;
         } else {
-            index++;
+            (*index)++;
             break;
         }
-        index++;
+        (*index)++;
     }
     return value;
 }
