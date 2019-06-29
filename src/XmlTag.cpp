@@ -2,6 +2,7 @@
 #include <src/XmlAttribute.h>
 #include <src/StringExtension.h>
 #include <src/CharacterSet.h>
+#include <src/Logger.h>
 #include <iostream>
 
 XmlTag::XmlTag(const std::string& contents) {
@@ -34,6 +35,12 @@ std::vector<XmlAttribute> XmlTag::getAttributes() const {
         return std::vector<XmlAttribute>();
     }
 
+    try {
+        return getAttributesWithoutValidation();
+    } catch (std::invalid_argument ex) {
+        Logger::error("Failed to parse xml attribute: " + std::string(ex.what()));
+        return std::vector<XmlAttribute>();
+    }
     return getAttributesWithoutValidation();
 }
 
@@ -122,7 +129,7 @@ std::vector<XmlAttribute> XmlTag::getAttributesWithoutValidation() const {
         std::string name = readXmlAttributeNameStartingFromIndex(&i);
         std::string value = readXmlAttributeValueStartingFromIndex(&i);
         if (name.length() != 0 && value.length() != 0) {
-            attributes.push_back({name, value});
+            attributes.push_back(XmlAttribute(name, value));
         } else {
             break;
         }

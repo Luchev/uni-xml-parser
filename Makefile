@@ -11,10 +11,10 @@ RELEASE_DIR_TEST = bin/test/
 
 TEST_MAIN_OBJ = build/test/test-main.o
 
-.PHONY: all init clean run test-all clearscr
+all: release
 
-all:
-	@$(C) src/*.cpp -o bin/foo
+release:
+	@$(C) src/*.cpp -o bin/xml-parser
 
 init:
 	@mkdir -p test
@@ -64,7 +64,8 @@ unit-XmlTag: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/CharacterSet.o\
 		build/src/StringExtension.o\
-		build/src/XmlConfig.o
+		build/src/XmlConfig.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -75,7 +76,8 @@ unit-XmlAttribute: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/CharacterSet.o\
 		build/src/StringExtension.o\
-		build/src/XmlConfig.o
+		build/src/XmlConfig.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -88,7 +90,8 @@ unit-XmlElementEmpty: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
 		build/src/CharacterSet.o\
-		build/src/StringExtension.o
+		build/src/StringExtension.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -102,7 +105,8 @@ unit-XmlElementSpecial: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
 		build/src/CharacterSet.o\
-		build/src/StringExtension.o
+		build/src/StringExtension.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -115,7 +119,8 @@ unit-XmlElementContent: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
 		build/src/CharacterSet.o\
-		build/src/StringExtension.o
+		build/src/StringExtension.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -130,7 +135,8 @@ unit-XmlElementDefault: $(TEST_MAIN_OBJ)\
 		build/src/XmlAttribute.o\
 		build/src/XmlConfig.o\
 		build/src/CharacterSet.o\
-		build/src/StringExtension.o
+		build/src/StringExtension.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
@@ -149,14 +155,9 @@ unit-XmlBuilder: $(TEST_MAIN_OBJ)\
 		build/src/CharacterSet.o\
 		build/src/StringExtension.o\
 		build/src/XmlTag.o\
-		build/src/File.o
+		build/src/File.o\
+		build/src/Logger.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
 	@bin/test/$@
-
-run: clearscrean all
-	@bin/foo
-
-clearscrean:
-	@clear

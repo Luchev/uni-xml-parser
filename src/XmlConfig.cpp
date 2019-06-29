@@ -13,6 +13,10 @@ std::string XmlConfig::getOutputQuote() const {
     return outputQuote;
 }
 
+std::string XmlConfig::getLogLocation() const {
+    return logLocation;
+}
+
 XmlConfig::~XmlConfig() {
     delete instance;
 }

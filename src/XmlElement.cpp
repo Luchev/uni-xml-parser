@@ -24,3 +24,11 @@ XmlElement* XmlElement::getParent() const {
 void XmlElement::setParent(XmlElement* parent) {
     this->parent = parent;
 }
+
+const XmlElement* XmlElement::getRoot() const {
+    const XmlElement* root = this;
+    while (root->getParent() != nullptr) {
+        root = parent;
+    }
+    return root;
+}

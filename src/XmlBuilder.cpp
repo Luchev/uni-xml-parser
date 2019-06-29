@@ -2,6 +2,7 @@
 #include <src/StringExtension.h>
 #include <include/XmlElements.h>
 #include <src/XmlFactory.h>
+#include <src/Logger.h>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -13,14 +14,24 @@ XmlBuilder::XmlBuilder() {
 }
 
 XmlElementDefault* XmlBuilder::parseFile(const std::string& path) {
-    openFileStream(path);
+    try {
+        openFileStream(path);
+    } catch (const std::invalid_argument& ex) {
+        Logger::error("Failed to create file stream: " + std::string(ex.what()));
+        return new XmlElementDefault;
+    }
     XmlElementDefault* root = parseInputStream();
     deleteInputStream();
     return root;
 }
 
 XmlElementDefault* XmlBuilder::parseString(const std::string& xml) {
-    openStringStream(xml);
+    try {
+        openStringStream(xml);
+    } catch (const std::invalid_argument& ex) {
+        Logger::error("Failed to create string stream: " + std::string(ex.what()));
+        return new XmlElementDefault;
+    }
     XmlElementDefault* root = parseInputStream();
     deleteInputStream();
     return root;
@@ -28,8 +39,16 @@ XmlElementDefault* XmlBuilder::parseString(const std::string& xml) {
 
 XmlElementDefault* XmlBuilder::parseInputStream() const {
     std::vector<XmlTag> tags = parseStreamToTags();
-    XmlElementDefault* root = parseXmlTagsToXmlElements(tags);
-    return root;
+    try {
+        XmlElementDefault* root = parseXmlTagsToXmlElements(tags);
+        return root;
+    } catch (const std::invalid_argument& ex) {
+        Logger::error("Failed parsing xml: " + std::string(ex.what()));
+        return new XmlElementDefault;
+    } catch (const std::domain_error& ex) {
+        Logger::error("Failed parsing xml: " + std::string(ex.what()));
+        return new XmlElementDefault;
+    }
 }
 
 XmlElementDefault* XmlBuilder::
@@ -90,6 +109,7 @@ XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTa
         } else if (tag.isClosing()) {
             currentNode = addXmlCloseTagToXmlElement(currentNode, tag);
         } else {
+            delete currentNode->getRoot();
             throw std::invalid_argument("Tag is of unknown type");
         }
     }

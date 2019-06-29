@@ -6,6 +6,7 @@ class XmlConfig {
     static XmlConfig * getInstance();
 
     std::string getOutputQuote() const;
+    std::string getLogLocation() const;
 
     ~XmlConfig();
 
@@ -17,4 +18,5 @@ class XmlConfig {
     static XmlConfig * instance;
 
     std::string outputQuote = "\"";
+    std::string logLocation = "logs/logs.log";
 };

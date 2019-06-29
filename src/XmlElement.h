@@ -12,8 +12,10 @@ class XmlElement {
     XmlElementType getType() const;
     std::string getName() const;
     void setName(const std::string& name);
+
     XmlElement* getParent() const;
     void setParent(XmlElement* parent);
+    const XmlElement* getRoot() const;
 
     virtual std::string toString() const = 0;
     virtual std::string toStringBeautified() const = 0;

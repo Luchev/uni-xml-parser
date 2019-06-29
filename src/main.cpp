@@ -1,10 +1,12 @@
 #include <src/XmlBuilder.h>
 #include <include/XmlElements.h>
+#include <src/Logger.h>
 #include <iostream>
 
 void run(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cout << "Not enough parameters";
+        Logger::error("Not enough parameters provided to program");
+        std::cout << "Not enough parameters provided to program\n";
         return;
     }
     XmlBuilder builder;
