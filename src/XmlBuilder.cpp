@@ -1,7 +1,6 @@
 #include <src/XmlBuilder.h>
 #include <src/StringExtension.h>
 #include <include/XmlElements.h>
-#include <src/XmlFactory.h>
 #include <src/Logger.h>
 #include <string>
 #include <vector>

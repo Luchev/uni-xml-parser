@@ -49,7 +49,7 @@ build/test/%.o: test/%.cpp
 	@echo Compiling $<
 	@$(C) -o $@ -c $<
 
-unit: $(TEST_MAIN_OBJ)\
+unit-all: $(TEST_MAIN_OBJ)\
 		unit-XmlTag\
 		unit-XmlAttribute\
 		unit-XmlElementEmpty\
