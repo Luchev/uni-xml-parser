@@ -111,19 +111,19 @@ bool testXmlTagIsClosingWithCloseTag() {
     return tag.isClosing() == true;
 }
 
-bool testXmlTagIsSelfClosingWithSelfClosing() {
+bool testXmlTagIsEmptyWithSelfClosing() {
     XmlTag tag("<tag />");
-    return tag.isSelfClosing() == true;
+    return tag.isEmpty() == true;
 }
 
-bool testXmlTagIsSelfClosingWithOpenTag() {
+bool testXmlTagIsEmptyWithOpenTag() {
     XmlTag tag("<tag>");
-    return tag.isSelfClosing() == false;
+    return tag.isEmpty() == false;
 }
 
-bool testXmlTagIsSelfClosingWithCloseTag() {
+bool testXmlTagIsEmptyWithCloseTag() {
     XmlTag tag("</tag>");
-    return tag.isSelfClosing() == false;
+    return tag.isEmpty() == false;
 }
 
 bool testXmlTagGetAttributesCountWithOneAttribute() {

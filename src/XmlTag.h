@@ -10,16 +10,16 @@ class XmlTag {
 
     std::string toString() const;
 
+    std::string getContents() const;
     std::string getName() const;
     std::vector<XmlAttribute> getAttributes() const;
 
     bool isOpening() const;
     bool isClosing() const;
-    bool isSelfClosing() const;
+    bool isEmpty() const;
     bool isSpecial() const;
     bool isValid() const;
     bool isContents() const;
-    bool isEmpty() const;
 
  private:
     std::string contents;

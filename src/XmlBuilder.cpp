@@ -81,7 +81,7 @@ XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTa
     for (XmlTag tag : tags) {
         if (tag.isContents()) {
             currentNode = addXmlContentToXmlElement(currentNode, tag);
-        } else if (tag.isSelfClosing()) {
+        } else if (tag.isEmpty()) {
             currentNode = addXmlEmptyToXmlElement(currentNode, tag);
         } else if (tag.isSpecial()) {
             currentNode = addXmlSpecialToXmlElement(currentNode, tag);
@@ -101,7 +101,7 @@ std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
     std::vector<XmlTag> tags;
     while (!this->inputStream->eof()) {
         XmlTag nextTag = getTagFromStream();
-        if (!nextTag.isEmpty()) {
+        if (!nextTag.getContents().size() == 0) {
             tags.push_back(nextTag);
         }
     }

@@ -13,6 +13,10 @@ std::string XmlTag::toString() const {
     return contents;
 }
 
+std::string XmlTag::getContents() const {
+    return this->contents;
+}
+
 std::string XmlTag::getName() const {
     if (!isValid()) {
         return "";
@@ -42,7 +46,7 @@ bool XmlTag::isClosing() const {
     return startsWithChar('/');
 }
 
-bool XmlTag::isSelfClosing() const {
+bool XmlTag::isEmpty() const {
     return endsWithChar('/');
 }
 
@@ -59,10 +63,6 @@ bool XmlTag::isValid() const {
 
 bool XmlTag::isContents() const {
     return !isValid();
-}
-
-bool XmlTag::isEmpty() const {
-    return this->contents.size() == 0;
 }
 
 bool XmlTag::startsWithChar(char character) const {

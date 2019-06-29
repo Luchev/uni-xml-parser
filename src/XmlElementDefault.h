@@ -14,6 +14,7 @@ class XmlElementDefault : public XmlElementEmpty {
     void addChildElement(const XmlElement* xmlElement);
     XmlElement* getLastChild();
     size_t getNumberOfChildren() const;
+    XmlElement* getChild(size_t index);
 
     std::string toString() const override;
     std::string toStringBeautified() const override;
@@ -26,7 +27,6 @@ class XmlElementDefault : public XmlElementEmpty {
     void copyXmlElementDefault(const XmlElementDefault& element);
     void setChildren(const std::vector<XmlElement*>& children);
     void deleteChildren();
-    XmlElement* getChild(size_t index);
 
     std::string toStringOpenTag() const;
     std::string toStringCloseTag() const;
