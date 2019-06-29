@@ -21,7 +21,10 @@ XmlElementDefault* XmlBuilder::parseFile(const std::string& path) {
         return new XmlElementDefault;
     }
 
+    Logger::info("Parsing file " + path + " to xml");
     XmlElementDefault* root = parseInputStream();
+    Logger::info("Finished parsing file");
+
     deleteInputStream();
 
     return root;
@@ -35,7 +38,10 @@ XmlElementDefault* XmlBuilder::parseString(const std::string& string) {
         return new XmlElementDefault;
     }
 
+    Logger::info("Parsing string to xml");
     XmlElementDefault* root = parseInputStream();
+    Logger::info("Finished parsing string");
+
     deleteInputStream();
 
     return root;
@@ -56,53 +62,8 @@ XmlElementDefault* XmlBuilder::parseInputStream() const {
     }
 }
 
-XmlElementDefault* XmlBuilder::
-addXmlContentToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
-    XmlElementContent contentElement(tag.toString());
-    element->addChildElement(&contentElement);
-    return element;
-}
-
-XmlElementDefault* XmlBuilder::
-addXmlEmptyToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
-    XmlElementEmpty emptyElement(tag.getName(), tag.getAttributes());
-    element->addChildElement(&emptyElement);
-    return element;
-}
-
-XmlElementDefault* XmlBuilder::
-addXmlSpecialToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
-    XmlElementSpecial specialElement(tag.getName(), tag.getAttributes());
-    element->addChildElement(&specialElement);
-    return element;
-}
-
-XmlElementDefault* XmlBuilder::
-addXmlOpenTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
-    XmlElementDefault defaultElement(tag.getName(), tag.getAttributes());
-    defaultElement.setParent(element);
-    element->addChildElement(&defaultElement);
-
-    XmlElement* justAddedElement = element->getChild(element->getNumberOfChildren() - 1);
-    element = dynamic_cast<XmlElementDefault*>(justAddedElement);
-    return element;
-}
-
-XmlElementDefault* XmlBuilder::
-addXmlCloseTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
-    if (element->getParent() == nullptr) {
-        throw std::domain_error("Invalid xml tree, too many close tags");
-    }
-
-    if (tag.getName() != element->getName()) {
-        throw std::domain_error("Invalid xml tree, mismatched name of open and close tag");
-    }
-
-    element = dynamic_cast<XmlElementDefault*>(element->getParent());
-    return element;
-}
-
 XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const {
+    Logger::info("Parsing stream to vector of tags");
     XmlElementDefault* currentNode = new XmlElementDefault;
 
     for (XmlTag tag : tags) {
@@ -132,6 +93,7 @@ std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
     while (!this->inputStream->eof()) {
         XmlTag nextTag = getTagFromStream();
         if (!nextTag.getContent().size() == 0) {
+            Logger::info("Read tag: " + nextTag.getContent());
             tags.push_back(nextTag);
         }
     }
@@ -139,7 +101,64 @@ std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
     return tags;
 }
 
+XmlElementDefault* XmlBuilder::
+addXmlContentToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    Logger::info("Adding Content Xml Element: " + tag.getContent().substr(0, 30));
+
+    XmlElementContent contentElement(tag.toString());
+    element->addChildElement(&contentElement);
+    return element;
+}
+
+XmlElementDefault* XmlBuilder::
+addXmlEmptyToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    Logger::info("Adding Empty Xml Element: <" + tag.getName() + ">");
+
+    XmlElementEmpty emptyElement(tag.getName(), tag.getAttributes());
+    element->addChildElement(&emptyElement);
+    return element;
+}
+
+XmlElementDefault* XmlBuilder::
+addXmlSpecialToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    Logger::info("Adding Special Xml Element: <" + tag.getName() + ">");
+
+    XmlElementSpecial specialElement(tag.getName(), tag.getAttributes());
+    element->addChildElement(&specialElement);
+    return element;
+}
+
+XmlElementDefault* XmlBuilder::
+addXmlOpenTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    Logger::info("Adding Opening Xml Element: <" + tag.getName() + ">");
+
+    XmlElementDefault defaultElement(tag.getName(), tag.getAttributes());
+    defaultElement.setParent(element);
+    element->addChildElement(&defaultElement);
+
+    XmlElement* justAddedElement = element->getChild(element->getNumberOfChildren() - 1);
+    element = dynamic_cast<XmlElementDefault*>(justAddedElement);
+    return element;
+}
+
+XmlElementDefault* XmlBuilder::
+addXmlCloseTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    Logger::info("Adding Closing Xml Element: <" + tag.getName() + ">");
+
+    if (element->getParent() == nullptr) {
+        throw std::domain_error("Invalid xml tree, too many close tags");
+    }
+
+    if (tag.getName() != element->getName()) {
+        throw std::domain_error("Invalid xml tree, mismatched name of open and close tag");
+    }
+
+    element = dynamic_cast<XmlElementDefault*>(element->getParent());
+    return element;
+}
+
 void XmlBuilder::openFileStream(const std::string& path) {
+    Logger::info("Opening file stream " + path);
     inputStream = new std::ifstream(path);
 
     if (inputStream->fail()) {
@@ -148,6 +167,7 @@ void XmlBuilder::openFileStream(const std::string& path) {
 }
 
 void XmlBuilder::openStringStream(const std::string& string) {
+    Logger::info("Opening string stream");
     inputStream = new std::stringstream(string);
 
     if (inputStream->fail()) {
@@ -156,6 +176,8 @@ void XmlBuilder::openStringStream(const std::string& string) {
 }
 
 void XmlBuilder::deleteInputStream() {
+    Logger::info("Closing stream");
+
     delete inputStream;
 }
 
