@@ -21,11 +21,11 @@ class XmlBuilder {
     XmlElementDefault* parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const;
     std::vector<XmlTag> parseStreamToTags() const;
 
-    XmlElementDefault* addXmlContentToXmlElement(XmlElementDefault* root, const XmlTag& tag) const;
-    XmlElementDefault* addXmlEmptyToXmlElement(XmlElementDefault* root, const XmlTag& tag) const;
-    XmlElementDefault* addXmlSpecialToXmlElement(XmlElementDefault* root, const XmlTag& tag) const;
-    XmlElementDefault* addXmlOpenTagToXmlElement(XmlElementDefault* root, const XmlTag& tag) const;
-    XmlElementDefault* addXmlCloseTagToXmlElement(XmlElementDefault* root, const XmlTag& tag) const;
+    XmlElementDefault* addXmlContentToXmlElement(XmlElementDefault* element, const XmlTag& tag) const;
+    XmlElementDefault* addXmlEmptyToXmlElement(XmlElementDefault* element, const XmlTag& tag) const;
+    XmlElementDefault* addXmlSpecialToXmlElement(XmlElementDefault* element, const XmlTag& tag) const;
+    XmlElementDefault* addXmlOpenTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const;
+    XmlElementDefault* addXmlCloseTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const;
 
     void openFileStream(const std::string & path);
     void openStringStream(const std::string & string);

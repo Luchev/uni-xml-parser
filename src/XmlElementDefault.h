@@ -11,10 +11,11 @@ class XmlElementDefault : public XmlElementEmpty {
     XmlElementDefault& operator=(const XmlElementDefault& rhs);
     ~XmlElementDefault();
 
-    void addChildElement(const XmlElement* xmlElement);
-    XmlElement* getLastChild();
+    void addChildElement(const XmlElement* element);
     size_t getNumberOfChildren() const;
     XmlElement* getChild(size_t index);
+
+    bool isNameless() const;
 
     std::string toString() const override;
     std::string toStringBeautified() const override;

@@ -28,10 +28,12 @@ std::string XmlElementEmpty::toString() const {
     std::string output;
     output += '<';
     output += getName();
+
     for (XmlAttribute attribute : attributes) {
         output += ' ';
         output += attribute.toString();
     }
+
     output += "/>";
     return output;
 }

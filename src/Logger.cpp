@@ -3,7 +3,7 @@
 #define MB 1024 * 1024
 
 static std::shared_ptr<spdlog::logger> logger = spdlog::rotating_logger_mt
-    ("spinlogger", XmlConfig::getInstance()->getLogLocation(), 5 * MB, 3);
+    ("spinlogger", XmlConfig::getInstance()->getLogPath(), 5 * MB, 3);
 
 void Logger::info(std::string message) {
     auto logger = spdlog::get("spinlogger");

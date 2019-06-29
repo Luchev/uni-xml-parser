@@ -27,8 +27,10 @@ void XmlElement::setParent(XmlElement* parent) {
 
 const XmlElement* XmlElement::getRoot() const {
     const XmlElement* root = this;
+
     while (root->getParent() != nullptr) {
         root = parent;
     }
+
     return root;
 }

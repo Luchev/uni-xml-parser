@@ -4,7 +4,7 @@
 
 class XmlAttribute {
  public:
-    XmlAttribute(const std::string& name, const std::string& value);
+    XmlAttribute(std::string name, std::string value);
 
     std::string getName() const;
     std::string getValue() const;

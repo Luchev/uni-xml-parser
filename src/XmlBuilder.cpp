@@ -16,87 +16,95 @@ XmlBuilder::XmlBuilder() {
 XmlElementDefault* XmlBuilder::parseFile(const std::string& path) {
     try {
         openFileStream(path);
-    } catch (const std::invalid_argument& ex) {
-        Logger::error("Failed to create file stream: " + std::string(ex.what()));
+    } catch (const std::invalid_argument& exception) {
+        Logger::error("Failed to create file stream: " + std::string(exception.what()));
         return new XmlElementDefault;
     }
+
     XmlElementDefault* root = parseInputStream();
     deleteInputStream();
+
     return root;
 }
 
-XmlElementDefault* XmlBuilder::parseString(const std::string& xml) {
+XmlElementDefault* XmlBuilder::parseString(const std::string& string) {
     try {
-        openStringStream(xml);
-    } catch (const std::invalid_argument& ex) {
-        Logger::error("Failed to create string stream: " + std::string(ex.what()));
+        openStringStream(string);
+    } catch (const std::invalid_argument& exception) {
+        Logger::error("Failed to create string stream: " + std::string(exception.what()));
         return new XmlElementDefault;
     }
+
     XmlElementDefault* root = parseInputStream();
     deleteInputStream();
+
     return root;
 }
 
 XmlElementDefault* XmlBuilder::parseInputStream() const {
     std::vector<XmlTag> tags = parseStreamToTags();
+
     try {
         XmlElementDefault* root = parseXmlTagsToXmlElements(tags);
         return root;
-    } catch (const std::invalid_argument& ex) {
-        Logger::error("Failed parsing xml: " + std::string(ex.what()));
+    } catch (const std::invalid_argument& exception) {
+        Logger::error("Failed parsing xml: " + std::string(exception.what()));
         return new XmlElementDefault;
-    } catch (const std::domain_error& ex) {
-        Logger::error("Failed parsing xml: " + std::string(ex.what()));
+    } catch (const std::domain_error& exception) {
+        Logger::error("Failed parsing xml: " + std::string(exception.what()));
         return new XmlElementDefault;
     }
 }
 
 XmlElementDefault* XmlBuilder::
-addXmlContentToXmlElement(XmlElementDefault* root, const XmlTag& tag) const {
+addXmlContentToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
     XmlElementContent contentElement(tag.toString());
-    root->addChildElement(&contentElement);
-    return root;
+    element->addChildElement(&contentElement);
+    return element;
 }
 
 XmlElementDefault* XmlBuilder::
-addXmlEmptyToXmlElement(XmlElementDefault* root, const XmlTag& tag) const {
+addXmlEmptyToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
     XmlElementEmpty emptyElement(tag.getName(), tag.getAttributes());
-    root->addChildElement(&emptyElement);
-    return root;
+    element->addChildElement(&emptyElement);
+    return element;
 }
 
 XmlElementDefault* XmlBuilder::
-addXmlSpecialToXmlElement(XmlElementDefault* root, const XmlTag& tag) const {
+addXmlSpecialToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
     XmlElementSpecial specialElement(tag.getName(), tag.getAttributes());
-    root->addChildElement(&specialElement);
-    return root;
+    element->addChildElement(&specialElement);
+    return element;
 }
 
 XmlElementDefault* XmlBuilder::
-addXmlOpenTagToXmlElement(XmlElementDefault* root, const XmlTag& tag) const {
+addXmlOpenTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
     XmlElementDefault defaultElement(tag.getName(), tag.getAttributes());
-    defaultElement.setParent(root);
-    root->addChildElement(&defaultElement);
-    XmlElement* justAddedElement = root->getLastChild();
-    root = dynamic_cast<XmlElementDefault*>(justAddedElement);
-    return root;
+    defaultElement.setParent(element);
+    element->addChildElement(&defaultElement);
+
+    XmlElement* justAddedElement = element->getChild(element->getNumberOfChildren() - 1);
+    element = dynamic_cast<XmlElementDefault*>(justAddedElement);
+    return element;
 }
 
 XmlElementDefault* XmlBuilder::
-addXmlCloseTagToXmlElement(XmlElementDefault* root, const XmlTag& tag) const {
-    if (root->getParent() == nullptr) {
+addXmlCloseTagToXmlElement(XmlElementDefault* element, const XmlTag& tag) const {
+    if (element->getParent() == nullptr) {
         throw std::domain_error("Invalid xml tree, too many close tags");
     }
-    if (tag.getName() != root->getName()) {
+
+    if (tag.getName() != element->getName()) {
         throw std::domain_error("Invalid xml tree, mismatched name of open and close tag");
     }
 
-    root = dynamic_cast<XmlElementDefault*>(root->getParent());
-    return root;
+    element = dynamic_cast<XmlElementDefault*>(element->getParent());
+    return element;
 }
 
 XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTag>& tags) const {
     XmlElementDefault* currentNode = new XmlElementDefault;
+
     for (XmlTag tag : tags) {
         if (tag.isContents()) {
             currentNode = addXmlContentToXmlElement(currentNode, tag);
@@ -113,23 +121,27 @@ XmlElementDefault* XmlBuilder::parseXmlTagsToXmlElements(const std::vector<XmlTa
             throw std::invalid_argument("Tag is of unknown type");
         }
     }
+
     return currentNode;
 }
 
 std::vector<XmlTag> XmlBuilder::parseStreamToTags() const {
     std::string bufferString;
     std::vector<XmlTag> tags;
+
     while (!this->inputStream->eof()) {
         XmlTag nextTag = getTagFromStream();
-        if (!nextTag.getContents().size() == 0) {
+        if (!nextTag.getContent().size() == 0) {
             tags.push_back(nextTag);
         }
     }
+
     return tags;
 }
 
 void XmlBuilder::openFileStream(const std::string& path) {
     inputStream = new std::ifstream(path);
+
     if (inputStream->fail()) {
         throw std::invalid_argument("Failed to open file " + path);
     }
@@ -137,6 +149,7 @@ void XmlBuilder::openFileStream(const std::string& path) {
 
 void XmlBuilder::openStringStream(const std::string& string) {
     inputStream = new std::stringstream(string);
+
     if (inputStream->fail()) {
         throw std::invalid_argument("Failed to make stream from string");
     }
@@ -149,6 +162,7 @@ void XmlBuilder::deleteInputStream() {
 XmlTag XmlBuilder::getTagFromStream() const {
     std::string bufferString;
     char bufferChar;
+
     while (inputStream->get(bufferChar)) {
         if (bufferChar == '<') {
             StringExtension::trim(&bufferString);
@@ -162,5 +176,6 @@ XmlTag XmlBuilder::getTagFromStream() const {
         }
         bufferString.push_back(bufferChar);
     }
+
     return XmlTag(bufferString);
 }

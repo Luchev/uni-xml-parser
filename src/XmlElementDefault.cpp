@@ -1,5 +1,6 @@
 #include <src/XmlElementDefault.h>
 #include <include/XmlElements.h>
+#include <src/StringExtension.h>
 #include <iostream>
 
 XmlElementDefault::XmlElementDefault(const std::string& name) {
@@ -30,15 +31,8 @@ XmlElementDefault::~XmlElementDefault() {
     deleteChildren();
 }
 
-void XmlElementDefault::addChildElement(const XmlElement* xmlElement) {
-    this->children.push_back(xmlElement->clone());
-}
-
-XmlElement* XmlElementDefault::getLastChild() {
-    if (this->children.size() == 0) {
-        throw std::out_of_range("Cannot get last child xml element. There are no child elements.");
-    }
-    return getChild(this->children.size() - 1);
+void XmlElementDefault::addChildElement(const XmlElement* element) {
+    this->children.push_back(element->clone());
 }
 
 size_t XmlElementDefault::getNumberOfChildren() const {
@@ -48,9 +42,11 @@ size_t XmlElementDefault::getNumberOfChildren() const {
 std::string XmlElementDefault::toString() const {
     std::string output;
     output += toStringOpenTag();
+
     for (XmlElement* child : children) {
         output += child->toString();
     }
+
     output += toStringCloseTag();
     return output;
 }
@@ -58,16 +54,16 @@ std::string XmlElementDefault::toString() const {
 std::string XmlElementDefault::toStringBeautified() const {
     std::string output;
     output += toStringOpenTag();
-    if (name.length() > 0) {
-        output += '\n';
-    }
+    output += '\n';
+
     for (XmlElement* child : children) {
         output += child->toStringBeautified();
     }
+
     output += toStringCloseTag();
-    if (name.length() > 0) {
-        output += '\n';
-    }
+    output += '\n';
+    StringExtension::trim(&output);
+
     return output;
 }
 
@@ -90,7 +86,8 @@ void XmlElementDefault::deleteChildren() {
     for (XmlElement* child : children) {
         delete child;
     }
-    children.resize(0);
+
+    children.clear();
 }
 
 XmlElement* XmlElementDefault::getChild(size_t index) {
@@ -99,32 +96,43 @@ XmlElement* XmlElementDefault::getChild(size_t index) {
             " child xml element. There are only " + std::to_string(this->children.size()) +
             " child elements");
     }
+
     return children[index];
 }
 
+bool XmlElementDefault::isNameless() const {
+    return this->name.size() == 0;
+}
+
 std::string XmlElementDefault::toStringOpenTag() const {
-    if (name.length() == 0) {
+    if (isNameless()) {
         return "";
     }
+
     std::string output;
     output += '<';
     output += getName();
+
     for (XmlAttribute attribute : attributes) {
         output += ' ';
         output += attribute.toString();
     }
+
     output += '>';
+
     return output;
 }
 
 std::string XmlElementDefault::toStringCloseTag() const {
-    if (name.length() == 0) {
+    if (isNameless()) {
         return "";
     }
+
     std::string output;
     output += '<';
     output += '/';
     output += getName();
     output += ">";
+
     return output;
 }

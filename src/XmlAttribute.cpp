@@ -2,15 +2,17 @@
 #include <src/CharacterSet.h>
 #include <src/StringExtension.h>
 #include <src/XmlConfig.h>
+#include <src/Logger.h>
 #include <string>
 #include <stdexcept>
 
-XmlAttribute::XmlAttribute(const std::string& name, const std::string& value) {
+XmlAttribute::XmlAttribute(std::string name, std::string value) {
+    StringExtension::trim(&name);
+
+    validateAttributeParameters(name, value);
+
     this->name = name;
     this->value = value;
-    StringExtension::trim(&this->name);
-    StringExtension::trim(&this->value);
-    validateAttributeParameters(name, value);
 }
 
 std::string XmlAttribute::getName() const {
@@ -23,6 +25,7 @@ std::string XmlAttribute::getValue() const {
 
 std::string XmlAttribute::toString() const {
     std::string quote = XmlConfig::getInstance()->getOutputQuote();
+
     if (!isNameless()) {
         return this->name + "=" + quote + this->value + quote;
     } else {
@@ -32,6 +35,7 @@ std::string XmlAttribute::toString() const {
 
 std::string XmlAttribute::toStringCompact() const {
     std::string quote = XmlConfig::getInstance()->getOutputQuote();
+
     if (CharacterSet::hasWhiteSpace(this->value)) {
         return toString();
     } else {
@@ -44,7 +48,7 @@ bool XmlAttribute::isNameless() const {
 }
 
 void XmlAttribute::validateAttributeParameters(const std::string& name, const std::string& value) {
-    if (name == "" && CharacterSet::hasWhiteSpace(value)) {
+    if (name.empty() && CharacterSet::hasWhiteSpace(value)) {
         throw std::invalid_argument("Nameless xml attribute must have value with no spaces");
     }
 }

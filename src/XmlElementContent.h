@@ -4,7 +4,7 @@
 
 class XmlElementContent : public XmlElement {
  public:
-    explicit XmlElementContent(const std::string& string = "");
+    explicit XmlElementContent(const std::string& content = "");
 
     std::string getContent() const;
     void setContent(const std::string& content);

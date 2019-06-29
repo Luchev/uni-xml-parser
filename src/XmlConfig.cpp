@@ -13,8 +13,8 @@ std::string XmlConfig::getOutputQuote() const {
     return outputQuote;
 }
 
-std::string XmlConfig::getLogLocation() const {
-    return logLocation;
+std::string XmlConfig::getLogPath() const {
+    return logPath;
 }
 
 XmlConfig::~XmlConfig() {
