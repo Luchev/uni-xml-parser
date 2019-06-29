@@ -15,7 +15,6 @@ TEST_MAIN_OBJ = build/test/test-main.o
 
 all:
 	@$(C) src/*.cpp -o bin/foo
-	@bin/foo
 
 init:
 	@mkdir -p test
@@ -149,7 +148,8 @@ unit-XmlBuilder: $(TEST_MAIN_OBJ)\
 		build/src/XmlConfig.o\
 		build/src/CharacterSet.o\
 		build/src/StringExtension.o\
-		build/src/XmlTag.o
+		build/src/XmlTag.o\
+		build/src/File.o
 	@echo Linking $@
 	@$(C) -o bin/test/$@ $^
 	@echo Running $@
