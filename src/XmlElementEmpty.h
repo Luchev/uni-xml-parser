@@ -9,16 +9,16 @@
 class XmlElementEmpty : public XmlElement {
  public:
     /** Constructor
-     * \param name - the name of the tag
+     * \param[in] name - the name of the tag
      */
     explicit XmlElementEmpty(const std::string& name = "");
     /** Constructor
-     * \param name - the name of the tag
-     * \param attributes - vector of XML attributes
+     * \param[in] name - the name of the tag
+     * \param[in] attributes - vector of XML attributes
      */
     XmlElementEmpty(const std::string& name, const std::vector<XmlAttribute> attributes);
     /** Add XML attribute
-     * \param attribute - the new attribute to add
+     * \param[in] attribute - the new attribute to add
      */
     void addAttribute(const XmlAttribute& attribute);
     /** Get all the attributes

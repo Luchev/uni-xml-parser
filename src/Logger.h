@@ -9,11 +9,11 @@
 class Logger {
  public:
     /** Log a message as information
-     * \param message - text to log
+     * \param[in] message - text to log
      */
     static void info(std::string message);
     /** Log a message as an error
-     * \param message - text to log
+     * \param[in] message - text to log
      */
     static void error(std::string message);
 

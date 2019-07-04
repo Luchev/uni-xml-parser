@@ -8,20 +8,20 @@
 class XmlElementDefault : public XmlElementEmpty {
  public:
     /** Constructor
-     * \param name - the name of the tag
+     * \param[in] name - the name of the tag
      */
     explicit XmlElementDefault(const std::string& name = "");
     /** Constructor
-     * \param name - the name of the tag
-     * \param attributes - vector of XML attributes
+     * \param[in] name - the name of the tag
+     * \param[in] attributes - vector of XML attributes
      */
     XmlElementDefault(const std::string& name, const std::vector<XmlAttribute>& attributes);
     /** Copy constructor
-     * \param rhs - the object to copy
+     * \param[in] rhs - the object to copy
      */
     XmlElementDefault(const XmlElementDefault& rhs);
     /** Copy constructor
-     * \param rhs - the object to copy
+     * \param[in] rhs - the object to copy
      */
     XmlElementDefault& operator=(const XmlElementDefault& rhs);
     /** Destructor
@@ -30,8 +30,8 @@ class XmlElementDefault : public XmlElementEmpty {
 
     /** Add a child XML element
      * 
-     * Add a clone of the parameter
-     * \param element - pointer to the object to add a copy of
+     * Add a clone of the param[in]eter
+     * \param[in] element - pointer to the object to add a copy of
      */
     void addChildElement(const XmlElement* element);
     /** Get the number of child elements
@@ -39,7 +39,7 @@ class XmlElementDefault : public XmlElementEmpty {
      */
     size_t getNumberOfChildren() const;
     /** Get the child at some index (used to iterate the children)
-     * \param index - index of the child
+     * \param[in] index - index of the child
      * \return XmlElement pointer - pointer to the given child
      * \throws std::out_of_range
      */

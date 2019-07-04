@@ -26,12 +26,12 @@ class XmlBuilder {
     void operator=(const XmlBuilder&) = delete;
     /** Parse file to XML tree
      * 
-     * \param path - path to file
+     * \param[in] path - path to file
      */
     XmlElementDefault* parseFile(const std::string & path);
     /** Parse string to XML tree
      * 
-     * \param xml - string containing xml
+     * \param[in] xml - string containing xml
      */
     XmlElementDefault* parseString(const std::string & xml);
 

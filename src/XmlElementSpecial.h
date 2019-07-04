@@ -8,12 +8,12 @@
 class XmlElementSpecial : public XmlElementEmpty {
  public:
     /** Constructor
-     * \param name - the name of the tag
+     * \param[in] name - the name of the tag
      */
     explicit XmlElementSpecial(const std::string& name = "");
     /** Constructor
-     * \param name - the name of the tag
-     * \param attributes - vector of XML attributes
+     * \param[in] name - the name of the tag
+     * \param[in] attributes - vector of XML attributes
      */
     XmlElementSpecial(const std::string& name, const std::vector<XmlAttribute> attributes);
 

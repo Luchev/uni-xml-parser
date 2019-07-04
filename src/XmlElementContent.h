@@ -7,7 +7,7 @@
 class XmlElementContent : public XmlElement {
  public:
     /** Constructor
-     * \param content - string (the actual text between the open and close tags)
+     * \param[in] content - string (the actual text between the open and close tags)
      */
     explicit XmlElementContent(const std::string& content = "");
     /** Get the content text
@@ -15,7 +15,7 @@ class XmlElementContent : public XmlElement {
      */
     std::string getContent() const;
     /** Set the content text
-     * \param content - string containing the content
+     * \param[in] content - string containing the content
      */
     void setContent(const std::string& content);
     /** Get the string representation of the element

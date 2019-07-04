@@ -15,7 +15,7 @@ class CharacterSet {
     */
     static bool hasWhiteSpace(const std::string& string);
     /** Check if a character is a whitespace
-     * \param character - character to check
+     * \param[in] character - character to check
      * \return bool
      */
     static bool isWhiteSpace(char character);
@@ -26,7 +26,7 @@ class CharacterSet {
      * - Lowercase letter
      * - Digit
      * - Special character "-_." (dash, underscore or dot)
-     * \param character - character to check
+     * \param[in] character - character to check
      * \return bool
      */
     static bool isXmlNameCharacter(char character);

@@ -21,7 +21,7 @@ class XmlElement {
      */
     std::string getName() const;
     /** Set the element name
-     * \param name - string (the new name)
+     * \param[in] name - string (the new name)
      */
     void setName(const std::string& name);
     /** Get the parent of the element
@@ -29,7 +29,7 @@ class XmlElement {
      */
     XmlElement* getParent() const;
     /** Set the parent of the element
-     * \param parent - XmlElement pointer to the parent
+     * \param[in] parent - XmlElement pointer to the parent
      */
     void setParent(XmlElement* parent);
     /** Get the grand parent of the element which has no parent of its own (the root of the XML tree)

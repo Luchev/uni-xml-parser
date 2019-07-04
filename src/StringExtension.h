@@ -6,15 +6,15 @@
 class StringExtension {
  public:
     /** Trim whitespaces from both sides
-     * \param string pointer to trim
+     * \param[in] string pointer to trim
      */
     static void trim(std::string* string);
     /** Trim whitespaces from the start of a string
-     * \param string pointer to trim
+     * \param[in] string pointer to trim
      */
     static void trimLeft(std::string* string);
     /** Trim whitespaces from the end of a string
-     * \param string pointer to trim
+     * \param[in] string pointer to trim
      */
     static void trimRight(std::string* string);
 };

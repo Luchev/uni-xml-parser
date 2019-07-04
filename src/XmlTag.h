@@ -9,7 +9,7 @@
 class XmlTag {
  public:
     /** Constructor
-     * \param content - the text to parse into a tag/tag content
+     * \param[in] content - the text to parse into a tag/tag content
      */
     explicit XmlTag(const std::string& content);
     /** Get the original text
