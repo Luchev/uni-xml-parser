@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+/** \file */
 
 /** Represents a tag or the contents between a tag
  */

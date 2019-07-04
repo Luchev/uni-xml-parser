@@ -4,6 +4,7 @@
 #include <src/XmlElementType.h>
 #include <string>
 #include <vector>
+/** \file */
 
 /** Abstract XML node from the XML tree
  */

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+/** \file */
 
 /** Configuration of the whole system
  * 

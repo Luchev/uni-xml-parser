@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+/** \file */
 
 /** Extend std::string functionality with static methods
  */

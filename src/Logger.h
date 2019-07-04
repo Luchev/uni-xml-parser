@@ -3,6 +3,7 @@
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <memory>
 #include <string>
+/** \file */
 
 /** Logging of errors and important messages for debugging
  */

@@ -3,6 +3,7 @@
 #include <src/XmlAttribute.h>
 #include <string>
 #include <vector>
+/** \file */
 
 /** XML element representing a self-closing tag
  */

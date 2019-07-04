@@ -2,6 +2,7 @@
 #include <src/XmlElementEmpty.h>
 #include <string>
 #include <vector>
+/** \file */
 
 /** Represents an open-close tag with its child elements
  */

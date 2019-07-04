@@ -1,6 +1,7 @@
 #pragma once
 #include <src/XmlElement.h>
 #include <string>
+/** \file */
 
 /** The text between an open and close tags
  */

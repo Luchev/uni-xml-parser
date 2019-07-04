@@ -5,5 +5,6 @@ var searchData=
   ['setname',['setName',['../classXmlElement.html#a0ed6ad08fd972865cca13ae2594fedda',1,'XmlElement']]],
   ['setparent',['setParent',['../classXmlElement.html#a1d1ad161ad8b6652d6964caccc62d2b4',1,'XmlElement']]],
   ['special',['Special',['../XmlElementType_8h.html#a541be5266c17cd5c715ff4e4df7e8d99ab4c2b550635fe54fd29f2b64dfaca55d',1,'XmlElementType.h']]],
-  ['stringextension',['StringExtension',['../classStringExtension.html',1,'']]]
+  ['stringextension',['StringExtension',['../classStringExtension.html',1,'']]],
+  ['stringextension_2eh',['StringExtension.h',['../StringExtension_8h.html',1,'']]]
 ];

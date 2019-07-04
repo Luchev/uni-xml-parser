@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+/** \file */
 
 /** The XML tree parser
  * 
