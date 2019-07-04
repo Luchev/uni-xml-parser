@@ -10,7 +10,7 @@ XmlElementType XmlElement::getType() const {
 }
 
 std::string XmlElement::getName() const {
-    return name;
+    return this->name;
 }
 
 void XmlElement::setName(const std::string& name) {

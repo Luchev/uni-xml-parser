@@ -1,0 +1,5 @@
+<map id="XmlElementEmpty" name="XmlElementEmpty">
+<area shape="rect" id="node3" href="$classXmlElementDefault.html" title="Represents an open&#45;close tag with its child elements. " alt="" coords="5,155,140,181"/>
+<area shape="rect" id="node4" href="$classXmlElementSpecial.html" title="Represents a header XML tag. " alt="" coords="165,155,301,181"/>
+<area shape="rect" id="node2" href="$classXmlElement.html" title="Abstract XML node from the XML tree. " alt="" coords="106,5,199,32"/>
+</map>

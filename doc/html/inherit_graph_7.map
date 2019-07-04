@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classXmlElement.html" title="Abstract XML node from the XML tree. " alt="" coords="5,31,99,57"/>
+<area shape="rect" id="node2" href="$classXmlElementContent.html" title="The text between an open and close tags. " alt="" coords="147,5,285,32"/>
+<area shape="rect" id="node3" href="$classXmlElementEmpty.html" title="XML element representing a self&#45;closing tag. " alt="" coords="151,56,281,83"/>
+<area shape="rect" id="node4" href="$classXmlElementDefault.html" title="Represents an open&#45;close tag with its child elements. " alt="" coords="334,31,469,57"/>
+<area shape="rect" id="node5" href="$classXmlElementSpecial.html" title="Represents a header XML tag. " alt="" coords="333,81,469,108"/>
+</map>

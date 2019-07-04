@@ -1,8 +1,8 @@
 #include <src/File.h>
 #include <fstream>
 
-std::string File::readFileToString(const std::string & FileName) {
-    std::ifstream inputFile(FileName, std::ios_base::binary);
+std::string File::readFileToString(const std::string & fileName) {
+    std::ifstream inputFile(fileName, std::ios_base::binary);
     std::string contents;
     if (inputFile.fail()) {
         return contents;

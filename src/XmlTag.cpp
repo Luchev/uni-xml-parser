@@ -11,7 +11,7 @@ XmlTag::XmlTag(const std::string& content) {
 }
 
 std::string XmlTag::toString() const {
-    return content;
+    return this->content;
 }
 
 std::string XmlTag::getContent() const {

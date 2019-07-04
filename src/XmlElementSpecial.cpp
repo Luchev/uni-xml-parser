@@ -27,6 +27,10 @@ std::string XmlElementSpecial::toString() const {
     return output;
 }
 
+std::string XmlElementSpecial::toStringBeautified() const {
+    return toString() + "\n";
+}
+
 XmlElement* XmlElementSpecial::clone() const {
     return new XmlElementSpecial(*this);
 }
