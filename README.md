@@ -1,4 +1,4 @@
-# XML Parser for the course Clean code
+# XML Parser
 
 This is a library-like project for parsing XML files and strings to an XML tree.
 
